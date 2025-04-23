@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hiappy/widgets/title_text.dart';
 
 class SessionHistoryItem {
   final String imageUrl;
@@ -16,30 +17,47 @@ class SessionHistoryItem {
 
 class SearchCardList extends StatelessWidget {
   final List<SessionHistoryItem> items;
+  final String? titleText;
+  final String? seeMoreText;
+  final VoidCallback? onSeeMore;
+  final void Function(SessionHistoryItem)? onMoreTap;
 
-  const SearchCardList({Key? key, required this.items}) : super(key: key);
+  const SearchCardList({
+    Key? key,
+    required this.items,
+    this.titleText,
+    this.seeMoreText,
+    this.onSeeMore,
+    this.onMoreTap,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        /// Header
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              Text(
-                "Session History",
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-              ),
-              Text(
-                "See more",
-                style: TextStyle(fontSize: 14, color: Colors.blue),
-              ),
-            ],
+        /// Header (optional)
+        if (titleText != null || seeMoreText != null)
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                if (titleText != null)
+                  Text(
+                    titleText!,
+                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                if (seeMoreText != null)
+                  GestureDetector(
+                    onTap: onSeeMore,
+                    child: Text(
+                      seeMoreText!,
+                      style: const TextStyle(fontSize: 14, color: Colors.black),
+                    ),
+                  ),
+              ],
+            ),
           ),
-        ),
 
         /// Cards
         ListView.builder(
@@ -49,12 +67,9 @@ class SearchCardList extends StatelessWidget {
           itemBuilder: (context, index) {
             final item = items[index];
             return Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 12.0,
-                vertical: 6,
-              ),
+              padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8),
               child: Container(
-                padding: const EdgeInsets.all(10),
+                height: 110,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(16),
@@ -66,66 +81,72 @@ class SearchCardList extends StatelessWidget {
                     ),
                   ],
                 ),
-                child: Row(
+                child: Stack(
                   children: [
-                    /// Thumbnail
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(12),
-                      child: Stack(
-                        alignment: Alignment.bottomCenter,
-                        children: [
-                          item.imageUrl.startsWith("http")
-                              ? Image.network(
-                                item.imageUrl,
-                                width: 80,
-                                height: 80,
-                                fit: BoxFit.cover,
-                              )
-                              : Image.asset(
-                                item.imageUrl,
-                                width: 80,
-                                height: 80,
-                                fit: BoxFit.cover,
-                              ),
-                        ],
-                      ),
-                    ),
+                    Row(
+                      children: [
+                        /// Thumbnail
+                        Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(12),
+                            child: item.imageUrl.startsWith("http")
+                                ? Image.network(
+                                    item.imageUrl,
+                                    width: 80,
+                                    height: 80,
+                                    fit: BoxFit.cover,
+                                  )
+                                : Image.asset(
+                                    item.imageUrl,
+                                    width: 80,
+                                    height: 80,
+                                    fit: BoxFit.cover,
+                                  ),
+                          ),
+                        ),
 
-                    const SizedBox(width: 12),
-
-                    /// Info
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            item.title,
-                            style: const TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.blue,
+                        /// Info
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 32.0, top: 12.0, bottom: 12.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                TitleText(text: item.title,
+                                  fontSize: 18,
+                                  color: Colors.blue,
+                                  maxLines: 2,
+                                ),
+                                const SizedBox(height: 4),
+                                TitleText(
+                                  text : item.subtitle,
+                                    fontSize: 13,
+                                    color: Colors.black54,
+                                    overflow: TextOverflow.ellipsis,
+                                ),
+                                const SizedBox(height: 4),
+                                TitleText(
+                                 text: "${item.duration} mins",
+                                  fontSize: 12
+                                ),
+                              ],
                             ),
                           ),
-                          const SizedBox(height: 4),
-                          Text(
-                            item.subtitle,
-                            style: const TextStyle(
-                              fontSize: 13,
-                              color: Colors.black54,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            "${item.duration} mins",
-                            style: const TextStyle(fontSize: 12),
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
 
-                    /// More icon
-                    const Icon(Icons.more_vert, size: 20),
+                    /// 3-dot icon in top-right
+                    Positioned(
+                      top: 8,
+                      right: 8,
+                      child: GestureDetector(
+                        onTap: () => onMoreTap?.call(item),
+                        child: const Icon(Icons.more_vert, size: 22),
+                      ),
+                    ),
                   ],
                 ),
               ),

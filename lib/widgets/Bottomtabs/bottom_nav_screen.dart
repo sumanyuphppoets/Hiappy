@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hiappy/core/constants/colors.dart';
-import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart' as pbn;
+import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart'
+    as pbn;
 
 class BottomTabItem {
   final String title;
@@ -19,9 +20,13 @@ class BottomTabItem {
 
 class BottomNavBarScreen extends StatefulWidget {
   final List<BottomTabItem> items;
-  final Function(int) onTabSelected;  // Add this parameter
+  final Function(int) onTabSelected; // Add this parameter
 
-  const BottomNavBarScreen({super.key, required this.items, required this.onTabSelected});
+  const BottomNavBarScreen({
+    super.key,
+    required this.items,
+    required this.onTabSelected,
+  });
 
   @override
   State<BottomNavBarScreen> createState() => _BottomNavBarScreenState();
@@ -48,13 +53,14 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
       final bool isCenterTab = index == (widget.items.length ~/ 2);
 
       return pbn.PersistentBottomNavBarItem(
-        icon: isCenterTab
-            ? const SizedBox.shrink() // We'll handle center icon separately
-            : SvgPicture.asset(
-                isActive ? item.activeSvgPath : item.inactiveSvgPath,
-                height: 100,
-                width: 100,
-              ),
+        icon:
+            isCenterTab
+                ? const SizedBox.shrink() // We'll handle center icon separately
+                : SvgPicture.asset(
+                  isActive ? item.activeSvgPath : item.inactiveSvgPath,
+                  height: 100,
+                  width: 100,
+                ),
         title: isCenterTab ? "" : item.title,
         activeColorPrimary: AppColors.royalBlue,
         inactiveColorPrimary: Colors.grey,
@@ -72,31 +78,33 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
     return Scaffold(
       body: Stack(
         children: [
-          SafeArea(
-            child: pbn.PersistentTabView(
-              context,
-              controller: _controller,
-              screens: _buildScreens(),
-              items: _buildNavBarItems(),
-              backgroundColor: AppColors.white,
-              navBarStyle: pbn.NavBarStyle.style3,
-              navBarHeight: 63,
-              onItemSelected: (index) {
-                widget.onTabSelected(index);  // Trigger the callback here
-                setState(() {}); // 👈 this is crucial to update the icons
-              },
-              decoration: pbn.NavBarDecoration(
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(10),
-                  topRight: Radius.circular(10),
+          SafeArea( // 👈 Add this for top margin
+              child: pbn.PersistentTabView(
+                context,
+                controller: _controller,
+                screens: _buildScreens(),
+                items: _buildNavBarItems(),
+                backgroundColor: AppColors.white,
+                navBarStyle: pbn.NavBarStyle.style3,
+                navBarHeight: 63,
+                onItemSelected: (index) {
+                  widget.onTabSelected(index); // Trigger the callback here
+                  setState(() {}); // 👈 Crucial to update the icons
+                },
+                decoration: pbn.NavBarDecoration(
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    topRight: Radius.circular(10),
+                  ),
+                  colorBehindNavBar: AppColors.white,
                 ),
-                colorBehindNavBar: AppColors.white,
               ),
             ),
-          ),
+  
           // Center button (floating above the navbar)
           Positioned(
-            bottom: 12, // Adjust to control how much it floats above the nav bar
+            bottom:
+                12, // Adjust to control how much it floats above the nav bar
             left: 0,
             right: 0,
             child: Center(
@@ -107,7 +115,9 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
                   setState(() {});
                 },
                 child: SvgPicture.asset(
-                  isActive ? centerItem.activeSvgPath : centerItem.inactiveSvgPath,
+                  isActive
+                      ? centerItem.activeSvgPath
+                      : centerItem.inactiveSvgPath,
                   height: 110,
                   width: 110,
                 ),

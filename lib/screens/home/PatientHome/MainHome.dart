@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hiappy/core/constants/colors.dart';
-import 'package:hiappy/widgets/CustomAppbar/PatientCustomAppbar.dart';
-import 'package:hiappy/widgets/Drawer/app_drawer.dart';
 import 'package:hiappy/widgets/MentorCard/MentorCard.dart';
 import 'package:hiappy/widgets/Sessionscard/SessionsCard.dart';
 import 'package:hiappy/widgets/UpcomingMeetings/UpcomingMeetings.dart';
@@ -23,13 +21,14 @@ final Meeting meeting = Meeting(
 
 class MainHome extends StatelessWidget {
   const MainHome({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(38, 137, 208, 235),
-      body: Row(
-        children: [
+      body: Padding(
+        padding: const EdgeInsets.only(bottom: 0.0),
+        child: Row(
+          children: [
           Expanded(
             child: SingleChildScrollView(
               // Make the Column scrollable
@@ -189,7 +188,9 @@ class MainHome extends StatelessWidget {
                     },
                   ),
                   const SizedBox(height: 40),
-                  SessionsCard(
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 40),
+                    child: SessionsCard(
                     headingText: 'Running Meetings',
                     seeMoreText: 'See more',
                     imagePath: 'assets/images/Sessionimg.png',
@@ -207,12 +208,14 @@ class MainHome extends StatelessWidget {
                       "assets/images/avatar3.png",
                     ],
                   ),
+                  ),
                 ],
               ),
             ),
           ),
         ],
       ),
+    ),
     );
   }
 }

@@ -136,6 +136,7 @@ flutter:
   - assets/images/Sessionimg.png
   - assets/images/Congratulation.png
   - assets/images/History_img.png
+  - assets/images/Invitations.png
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hiappy/core/constants/colors.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class Meeting {
   final String topic;
@@ -82,7 +81,8 @@ class MeetingCard extends StatelessWidget {
                 if (headingText != null)
                   Text(
                     headingText!,
-                    style: headingTextStyle ??
+                    style:
+                        headingTextStyle ??
                         const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w800,
@@ -94,7 +94,8 @@ class MeetingCard extends StatelessWidget {
                     onTap: onSeeMore,
                     child: Text(
                       seeMoreText!,
-                      style: seeMoreTextStyle ??
+                      style:
+                          seeMoreTextStyle ??
                           const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w400,
@@ -147,7 +148,8 @@ class MeetingCard extends StatelessWidget {
                         Expanded(
                           child: Text(
                             meeting.topic,
-                            style: topicTextStyle ??
+                            style:
+                                topicTextStyle ??
                                 const TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
@@ -156,23 +158,50 @@ class MeetingCard extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(width: 10),
-                        TextButton(
-                          onPressed: () {},
-                          style: TextButton.styleFrom(
+                        GestureDetector(
+                          child: Container(
                             padding: const EdgeInsets.symmetric(
-                                horizontal: 12, vertical: 6),
-                            backgroundColor:
-                                const Color(0xFFE6F0FF), // light blue background
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
+                              horizontal: 0,
+                              vertical: 0,
                             ),
-                          ),
-                          child: Text(
-                            meeting.platform,
-                            style: const TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              color: Color(0xFF007BFF),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              border: Border.all(
+                                width: 1.5,
+                                color: Colors.transparent,
+                              ),
+                              gradient: const LinearGradient(
+                                colors: [Color(0xFFEC6F66), Color(0xFF6E8EFB)],
+                              ),
+                            ),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                color: Colors.white, // inner background
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 12,
+                                vertical: 6,
+                              ),
+                              child: ShaderMask(
+                                shaderCallback:
+                                    (bounds) => const LinearGradient(
+                                      colors: [
+                                        Color(0xFFEC6F66),
+                                        Color(0xFF6E8EFB),
+                                      ],
+                                    ).createShader(bounds),
+                                child: Text(
+                                  meeting.platform,
+                                  style: const TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w500,
+                                    color:
+                                        Colors
+                                            .white, // important for ShaderMask
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
                         ),
@@ -186,7 +215,8 @@ class MeetingCard extends StatelessWidget {
                         child: Text(
                           titleText!,
                           maxLines: 2,
-                          style: titleTextStyle ??
+                          style:
+                              titleTextStyle ??
                               const TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
@@ -198,18 +228,10 @@ class MeetingCard extends StatelessWidget {
                     // Mentor
                     Text.rich(
                       TextSpan(
-                        text: 'Mentor: ',
-                        style: mentorTextStyle ??
-                            const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                            ),
                         children: [
                           TextSpan(
                             text: meeting.mentor,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
+                            style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
                         ],
                       ),
@@ -227,8 +249,8 @@ class MeetingCard extends StatelessWidget {
                         const SizedBox(width: 8),
                         Text(
                           '${_formatDate(meeting.dateTime)}  ${_formatTime(meeting.dateTime)}',
-                          style: detailTextStyle ??
-                              const TextStyle(fontSize: 14),
+                          style:
+                              detailTextStyle ?? const TextStyle(fontSize: 14),
                         ),
                       ],
                     ),
@@ -245,8 +267,8 @@ class MeetingCard extends StatelessWidget {
                         const SizedBox(width: 8),
                         Text(
                           meeting.duration,
-                          style: detailTextStyle ??
-                              const TextStyle(fontSize: 14),
+                          style:
+                              detailTextStyle ?? const TextStyle(fontSize: 14),
                         ),
                       ],
                     ),
@@ -256,7 +278,8 @@ class MeetingCard extends StatelessWidget {
                         padding: const EdgeInsets.only(top: 20),
                         child: Text(
                           message!,
-                          style: messageTextStyle ??
+                          style:
+                              messageTextStyle ??
                               const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w500,
@@ -270,14 +293,17 @@ class MeetingCard extends StatelessWidget {
 
               // Buttons
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 10,
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     OutlinedButton(
                       onPressed: onCancel,
-                      style: cancelButtonStyle ??
+                      style:
+                          cancelButtonStyle ??
                           OutlinedButton.styleFrom(
                             side: const BorderSide(color: Color(0xFF007BFF)),
                             shape: RoundedRectangleBorder(
@@ -289,7 +315,8 @@ class MeetingCard extends StatelessWidget {
                     const SizedBox(width: 10),
                     ElevatedButton(
                       onPressed: onReschedule,
-                      style: rescheduleButtonStyle ??
+                      style:
+                          rescheduleButtonStyle ??
                           ElevatedButton.styleFrom(
                             padding: EdgeInsets.zero,
                             shape: RoundedRectangleBorder(
@@ -307,11 +334,14 @@ class MeetingCard extends StatelessWidget {
                         ),
                         child: Container(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 12),
+                            horizontal: 20,
+                            vertical: 12,
+                          ),
                           alignment: Alignment.center,
                           child: Text(
                             rescheduleText,
-                            style: rescheduleTextStyle ??
+                            style:
+                                rescheduleTextStyle ??
                                 const TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w500,
@@ -344,8 +374,18 @@ class MeetingCard extends StatelessWidget {
 
   static String _monthName(int month) {
     const months = [
-      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
     ];
     return months[month - 1];
   }

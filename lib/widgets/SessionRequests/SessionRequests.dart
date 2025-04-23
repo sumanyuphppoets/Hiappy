@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hiappy/widgets/Healpingbutton/button.dart';
 
 class SessionData {
   final String topic;
@@ -19,15 +20,26 @@ class SessionData {
 }
 
 class SessionRequests extends StatefulWidget {
-  final List<SessionData> sessions;
-  final void Function(SessionData session) onAccept;
-  final void Function(SessionData session) onReject;
+  final List<SessionData>? sessions; // Optional, may be null
+  final void Function(SessionData)? onAccept; // Optional callback function
+  final void Function(SessionData)? onReject; // Optional callback function
+  final String? headerText; // Optional dynamic header text
+  final String? actionText; // Optional dynamic action text
+  final VoidCallback? onActionClick; // Optional dynamic clickable function
+  final String? acceptButtonText; // Optional dynamic text for the accept button
+  final String? rejectButtonText; // Optional dynamic text for the reject button
+
 
   const SessionRequests({
     Key? key,
-    required this.sessions,
-    required this.onAccept,
-    required this.onReject,
+    this.sessions, // Nullable list of sessions
+    this.onAccept, // Nullable accept callback
+    this.onReject, // Nullable reject callback
+    this.headerText, // Nullable header text
+    this.actionText, // Nullable action text
+    this.onActionClick, // Nullable action callback
+    this.acceptButtonText, // Nullable dynamic accept button text
+    this.rejectButtonText, // Nullable dynamic reject button text
   }) : super(key: key);
 
   @override
@@ -43,62 +55,70 @@ class _SessionRequestsState extends State<SessionRequests> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        /// Header
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                "Session Requests (${widget.sessions.length.toString().padLeft(2, '0')})",
-                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-              ),
-              Text(
-                "See more",
-                style: TextStyle(
-                    color: Colors.blue.shade600, fontWeight: FontWeight.w500),
-              )
-            ],
-          ),
-        ),
-
-        /// Slider
-        SizedBox(
-          height: 260,
-          child: PageView.builder(
-            controller: _pageController,
-            onPageChanged: (index) {
-              setState(() {
-                _currentIndex = index;
-              });
-            },
-            itemCount: widget.sessions.length,
-            itemBuilder: (context, index) {
-              return _buildSessionCard(widget.sessions[index]);
-            },
-          ),
-        ),
-
-        /// Dots Indicator
-        const SizedBox(height: 12),
-        Center(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: List.generate(widget.sessions.length, (index) {
-              bool isActive = _currentIndex == index;
-              return AnimatedContainer(
-                duration: const Duration(milliseconds: 300),
-                margin: const EdgeInsets.symmetric(horizontal: 4),
-                height: 8,
-                width: isActive ? 24 : 8,
-                decoration: BoxDecoration(
-                  color: isActive ? Colors.blue : Colors.grey.shade300,
-                  borderRadius: BorderRadius.circular(12),
+        /// Header with dynamic text (conditionally render if headerText is provided)
+        if (widget.headerText != null && widget.sessions != null && widget.sessions!.isNotEmpty)
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "${widget.headerText} (${widget.sessions!.length.toString().padLeft(2, '0')})", // Use dynamic header text
+                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                 ),
-              );
-            }),
+                // Conditionally render the action text if it's available and the onActionClick is provided
+                if (widget.actionText != null && widget.onActionClick != null)
+                  GestureDetector(
+                    onTap: widget.onActionClick, // Trigger the dynamic action
+                    child: Text(
+                      widget.actionText!, // Use dynamic action text
+                      style: TextStyle(
+                          color: Colors.blue.shade600, fontWeight: FontWeight.w500),
+                    ),
+                  ),
+              ],
+            ),
           ),
-        ),
+
+        /// Slider (conditionally render if sessions are available)
+        if (widget.sessions != null && widget.sessions!.isNotEmpty)
+          SizedBox(
+            height: 260,
+            child: PageView.builder(
+              controller: _pageController,
+              onPageChanged: (index) {
+                setState(() {
+                  _currentIndex = index;
+                });
+              },
+              itemCount: widget.sessions!.length,
+              itemBuilder: (context, index) {
+                return _buildSessionCard(widget.sessions![index]);
+              },
+            ),
+          ),
+
+        /// Dots Indicator (conditionally render if sessions are available)
+        if (widget.sessions != null && widget.sessions!.isNotEmpty)
+          const SizedBox(height: 12),
+          Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(widget.sessions?.length ?? 0, (index) {
+                bool isActive = _currentIndex == index;
+                return AnimatedContainer(
+                  duration: const Duration(milliseconds: 300),
+                  margin: const EdgeInsets.symmetric(horizontal: 4),
+                  height: 8,
+                  width: isActive ? 24 : 8,
+                  decoration: BoxDecoration(
+                    color: isActive ? Colors.blue : Colors.grey.shade300,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                );
+              }),
+            ),
+          ),
       ],
     );
   }
@@ -129,34 +149,32 @@ class _SessionRequestsState extends State<SessionRequests> {
               children: [
                 const Text("Topic", style: TextStyle(color: Colors.grey)),
                 Container(
-                      decoration: BoxDecoration(
-                        gradient: const LinearGradient(
-                          colors: [Color(0xFFEB77CA), Color(0xFF968FFB)],
-                        ),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      padding: const EdgeInsets.all(
-                        1.5,
-                      ), // Thickness of the border
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 10,
-                          vertical: 4,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(18),
-                        ),
-                        child: const Text(
-                          'Via Zoom',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            color: Color(0xFF8A2BE2),
-                          ),
-                        ),
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                      colors: [Color(0xFFEB77CA), Color(0xFF968FFB)],
+                    ),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  padding: const EdgeInsets.all(1.5), // Thickness of the border
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 4,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(18),
+                    ),
+                    child: const Text(
+                      'Via Zoom',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: Color(0xFF8A2BE2),
                       ),
                     ),
+                  ),
+                ),
               ],
             ),
             const SizedBox(height: 6),
@@ -196,41 +214,28 @@ class _SessionRequestsState extends State<SessionRequests> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                _buildOutlinedButton("Reject", Colors.blue, () => widget.onReject(session)),
-                _buildGradientButton("Accept", () => widget.onAccept(session)),
+                buildOutlinedButton(
+              text: widget.rejectButtonText ?? "Reject",
+              color: Colors.blue,
+              onPressed: () {
+                if (widget.onReject != null) {
+                  widget.onReject!(session);
+                }
+              },
+            ),
+                buildGradientButton(
+              text: widget.acceptButtonText ?? "Accept",
+            
+              onPressed: () {
+                if (widget.onAccept != null) {
+                  widget.onAccept!(session);
+                }
+              },
+            ),
               ],
             )
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _buildOutlinedButton(String text, Color color, VoidCallback onPressed) {
-    return OutlinedButton(
-      onPressed: onPressed,
-      style: OutlinedButton.styleFrom(
-        side: BorderSide(color: color),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-      ),
-      child: Text(text, style: TextStyle(color: color)),
-    );
-  }
-
-  Widget _buildGradientButton(String text, VoidCallback onPressed) {
-    return Container(
-      decoration: BoxDecoration(
-        gradient: const LinearGradient(colors: [Color(0xFF56CCF2), Color(0xFF2F80ED)]),
-        borderRadius: BorderRadius.circular(30),
-      ),
-      child: ElevatedButton(
-        onPressed: onPressed,
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.transparent,
-          shadowColor: Colors.transparent,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-        ),
-        child: Text(text),
       ),
     );
   }

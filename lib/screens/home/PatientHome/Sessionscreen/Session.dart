@@ -19,82 +19,83 @@ final Meeting meeting = Meeting(
 );
 
 List<SessionData> sessions = [
-    SessionData(
-      topic: "Stress management tips!",
-      createdBy: "Abhijeet Patel",
-      date: "July 20, 2024",
-      time: "12:45 pm",
-      duration: "30-45 min via Zoom",
-      mode: "Via Zoom",
-    ),
-    SessionData(
-      topic: "Boosting productivity",
-      createdBy: "Neha Sharma",
-      date: "July 21, 2024",
-      time: "10:30 am",
-      duration: "40 min via Zoom",
-      mode: "Via Zoom",
-    ),
-    SessionData(
-      topic: "Healthy Mindset",
-      createdBy: "Ravi Kumar",
-      date: "July 22, 2024",
-      time: "2:00 pm",
-      duration: "30 min via Zoom",
-      mode: "Via Zoom",
-    ),
-    SessionData(
-      topic: "Time management",
-      createdBy: "Simran Kaur",
-      date: "July 23, 2024",
-      time: "1:00 pm",
-      duration: "45 min via Zoom",
-      mode: "Via Zoom",
-    ),
-    SessionData(
-      topic: "Work-Life Balance",
-      createdBy: "Mohit Verma",
-      date: "July 24, 2024",
-      time: "3:30 pm",
-      duration: "30-45 min via Zoom",
-      mode: "Via Zoom",
-    ),
-  ];
-  final List<Map<String, String>> sessionData = [
-    {
-      'imageUrl': 'assets/images/History_img.png',
-      'title': 'Stress management tips!',
-      'subtitle': 'Lorem ipsum dolor sit amet...',
-      'duration': '45:12',
-    },
-    {
-      'imageUrl': 'assets/images/History_img.png',
-      'title': 'Stress management tips!',
-      'subtitle': 'Lorem ipsum dolor sit amet...',
-      'duration': '45:12',
-    },
-    {
-      'imageUrl': 'assets/images/History_img.png',
-      'title': 'Stress management tips!',
-      'subtitle': 'Lorem ipsum dolor sit amet...',
-      'duration': '45:12',
-    },
-    {
-      'imageUrl': 'assets/images/History_img.png',
-      'title': 'Stress management tips!',
-      'subtitle': 'Lorem ipsum dolor sit amet...',
-      'duration': '45:12',
-    },
-  ];
+  SessionData(
+    topic: "Stress management tips!",
+    createdBy: "Abhijeet Patel",
+    date: "July 20, 2024",
+    time: "12:45 pm",
+    duration: "30-45 min via Zoom",
+    mode: "Via Zoom",
+  ),
+  SessionData(
+    topic: "Boosting productivity",
+    createdBy: "Neha Sharma",
+    date: "July 21, 2024",
+    time: "10:30 am",
+    duration: "40 min via Zoom",
+    mode: "Via Zoom",
+  ),
+  SessionData(
+    topic: "Healthy Mindset",
+    createdBy: "Ravi Kumar",
+    date: "July 22, 2024",
+    time: "2:00 pm",
+    duration: "30 min via Zoom",
+    mode: "Via Zoom",
+  ),
+  SessionData(
+    topic: "Time management",
+    createdBy: "Simran Kaur",
+    date: "July 23, 2024",
+    time: "1:00 pm",
+    duration: "45 min via Zoom",
+    mode: "Via Zoom",
+  ),
+  SessionData(
+    topic: "Work-Life Balance",
+    createdBy: "Mohit Verma",
+    date: "July 24, 2024",
+    time: "3:30 pm",
+    duration: "30-45 min via Zoom",
+    mode: "Via Zoom",
+  ),
+];
+final List<Map<String, String>> sessionData = [
+  {
+    'imageUrl': 'assets/images/History_img.png',
+    'title': 'Stress management tips!',
+    'subtitle': 'Lorem ipsum dolor sit amet...',
+    'duration': '45:12',
+  },
+  {
+    'imageUrl': 'assets/images/History_img.png',
+    'title': 'Stress management tips!',
+    'subtitle': 'Lorem ipsum dolor sit amet...',
+    'duration': '45:12',
+  },
+  {
+    'imageUrl': 'assets/images/History_img.png',
+    'title': 'Stress management tips!',
+    'subtitle': 'Lorem ipsum dolor sit amet...',
+    'duration': '45:12',
+  },
+  {
+    'imageUrl': 'assets/images/History_img.png',
+    'title': 'Stress management tips!',
+    'subtitle': 'Lorem ipsum dolor sit amet...',
+    'duration': '45:12',
+  },
+];
 
-  final List<SessionHistoryItem> items = sessionData.map((data) {
-    return SessionHistoryItem(
-      imageUrl: data['imageUrl'] ?? '',
-      title: data['title'] ?? '',
-      subtitle: data['subtitle'] ?? '',
-      duration: data['duration'] ?? '',
-    );
-  }).toList();
+final List<SessionHistoryItem> items =
+    sessionData.map((data) {
+      return SessionHistoryItem(
+        imageUrl: data['imageUrl'] ?? '',
+        title: data['title'] ?? '',
+        subtitle: data['subtitle'] ?? '',
+        duration: data['duration'] ?? '',
+      );
+    }).toList();
 void main() => runApp(MaterialApp(home: SessionScreen()));
 
 class SessionScreen extends StatelessWidget {
@@ -209,12 +210,22 @@ class SessionScreen extends StatelessWidget {
             ),
             const SizedBox(height: 30),
             SessionRequests(
+              headerText: 'Session Requests',
+              actionText: 'See more',
+              onActionClick: () {},
               onAccept: (session) => {},
               onReject: (session) => {},
               sessions: sessions,
             ),
             const SizedBox(height: 30),
-            SearchCardList(items: items),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 40),
+              child: SearchCardList(
+                seeMoreText: 'See more',
+                titleText: 'Session History',
+                items: items,
+              ),
+            ),
           ],
         ),
       ),
