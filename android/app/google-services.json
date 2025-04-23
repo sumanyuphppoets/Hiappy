@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "249991283312",
+    "project_id": "hiappy-1039c",
+    "storage_bucket": "hiappy-1039c.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:249991283312:android:021cd200b311c9290d6ab5",
+        "android_client_info": {
+          "package_name": "com.example.hiappy"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACOS7VsQZbKQPCjJeydIbYMwJ3FS06OuY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
