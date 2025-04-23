@@ -61,12 +61,9 @@ class _PatientHomeState extends State<PatientHome> {
         centerImage: 'assets/images/StaySoberLogo.png',
         notificationIcon: 'assets/icons/Notificationicon.svg',
         sosIcon: 'assets/icons/SOSicon.svg',
-        onBack: () {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (_) => PatientHome()),
-          );
-        },
+        onBack: ()=>({
+                       Navigator.of(context).maybePop(),
+        }),
         isHomePage:
             items[_selectedIndex].title ==
             'Home', // HomePage flag is true when Home is selected

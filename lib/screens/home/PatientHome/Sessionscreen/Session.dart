@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hiappy/core/constants/colors.dart';
-import 'package:hiappy/widgets/CustomAppbar/PatientCustomAppbar.dart';
+import 'package:hiappy/screens/home/PatientHome/SessionHistory/SessionHistory.dart';
 import 'package:hiappy/widgets/CustomInput.dart';
 import 'package:hiappy/widgets/Searchcard/Searchcard.dart';
 import 'package:hiappy/widgets/SessionRequests/SessionRequests.dart';
@@ -99,6 +99,8 @@ final List<SessionHistoryItem> items =
 void main() => runApp(MaterialApp(home: SessionScreen()));
 
 class SessionScreen extends StatelessWidget {
+  const SessionScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -224,6 +226,14 @@ class SessionScreen extends StatelessWidget {
                 seeMoreText: 'See more',
                 titleText: 'Session History',
                 items: items,
+                onSeeMore: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => SessionHistory(),
+                    ),
+                  );
+                },
               ),
             ),
           ],

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hiappy/core/constants/colors.dart';
+import 'package:hiappy/screens/home/PatientHome/SessionHistory/SessionHistory.dart';
 import 'package:hiappy/widgets/Invitations/Invitations.dart';
 import 'package:hiappy/widgets/Searchcard/Searchcard.dart';
 import 'package:hiappy/widgets/SessionRequests/SessionRequests.dart';
@@ -202,6 +203,14 @@ class MeetingScreen extends StatelessWidget {
               SearchCardList(
                 seeMoreText: 'See more',
                 titleText: 'Session History',
+                onSeeMore: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => SessionHistory(),
+                    ),
+                  );
+                },
                 items: items,
               ),
               Padding(
