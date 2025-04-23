@@ -204,11 +204,8 @@ class MeetingScreen extends StatelessWidget {
                 seeMoreText: 'See more',
                 titleText: 'Session History',
                 onSeeMore: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => SessionHistory(),
-                    ),
+                  Navigator.of(context, rootNavigator: true).push(
+                    MaterialPageRoute(builder: (context) => SessionHistory()),
                   );
                 },
                 items: items,

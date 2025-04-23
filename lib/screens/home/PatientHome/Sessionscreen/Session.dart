@@ -227,8 +227,7 @@ class SessionScreen extends StatelessWidget {
                 titleText: 'Session History',
                 items: items,
                 onSeeMore: () {
-                  Navigator.push(
-                    context,
+                  Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) => SessionHistory(),
                     ),

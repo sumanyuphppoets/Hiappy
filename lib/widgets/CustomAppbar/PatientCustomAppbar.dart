@@ -49,8 +49,7 @@ class PatientCustomAppBar extends StatelessWidget
                 onPressed:
                     onBack ??
                     () {
-                       Navigator.of(context).maybePop();
-                       print('Back button pressed');
+                       Navigator.of(context).maybePop(); 
                     },
               ),
       actions: [
