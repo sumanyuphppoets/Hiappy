@@ -26,6 +26,7 @@ class MeetingCard extends StatelessWidget {
   final String? headingText;
   final String? seeMoreText;
   final String? titleText;
+  final String? cancelText;
 
   final VoidCallback onCancel;
   final VoidCallback onReschedule;
@@ -38,9 +39,11 @@ class MeetingCard extends StatelessWidget {
   final TextStyle? mentorTextStyle;
   final TextStyle? detailTextStyle;
   final TextStyle? messageTextStyle;
-  final ButtonStyle? cancelButtonStyle;
   final ButtonStyle? rescheduleButtonStyle;
   final TextStyle? rescheduleTextStyle;
+
+  // 🔥 NEW: Cancel gradient colors
+  final List<Color>? cancelGradientColors;
 
   const MeetingCard({
     Key? key,
@@ -60,14 +63,18 @@ class MeetingCard extends StatelessWidget {
     this.mentorTextStyle,
     this.detailTextStyle,
     this.messageTextStyle,
-    this.cancelButtonStyle,
     this.rescheduleButtonStyle,
     this.rescheduleTextStyle,
+    this.cancelGradientColors,
+    this.cancelText, // 💥 New prop
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final String displayImage = meeting.imagePath ?? '';
+    final List<Color> cancelColors =
+        cancelGradientColors ??
+        [Color(0xFFEC6F66), Color(0xFF6E8EFB)]; // default gradient
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -109,7 +116,7 @@ class MeetingCard extends StatelessWidget {
         if (headingText != null || (seeMoreText != null && onSeeMore != null))
           const SizedBox(height: 12),
 
-        // Card Content
+        // Card
         Card(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
@@ -132,7 +139,6 @@ class MeetingCard extends StatelessWidget {
                   ),
                 ),
 
-              // Text content
               Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 20,
@@ -141,7 +147,7 @@ class MeetingCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Topic and Platform
+                    // Topic + platform
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -158,50 +164,24 @@ class MeetingCard extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(width: 10),
-                        GestureDetector(
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 0,
-                              vertical: 0,
+                        // Platform tag with gradient
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            gradient: const LinearGradient(
+                              colors: [Color(0xFFEC6F66), Color(0xFF6E8EFB)],
                             ),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              border: Border.all(
-                                width: 1.5,
-                                color: Colors.transparent,
-                              ),
-                              gradient: const LinearGradient(
-                                colors: [Color(0xFFEC6F66), Color(0xFF6E8EFB)],
-                              ),
-                            ),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                                color: Colors.white, // inner background
-                              ),
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 12,
-                                vertical: 6,
-                              ),
-                              child: ShaderMask(
-                                shaderCallback:
-                                    (bounds) => const LinearGradient(
-                                      colors: [
-                                        Color(0xFFEC6F66),
-                                        Color(0xFF6E8EFB),
-                                      ],
-                                    ).createShader(bounds),
-                                child: Text(
-                                  meeting.platform,
-                                  style: const TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w500,
-                                    color:
-                                        Colors
-                                            .white, // important for ShaderMask
-                                  ),
-                                ),
-                              ),
+                          ),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 6,
+                          ),
+                          child: Text(
+                            meeting.platform,
+                            style: const TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white,
                             ),
                           ),
                         ),
@@ -225,20 +205,14 @@ class MeetingCard extends StatelessWidget {
                         ),
                       ),
 
-                    // Mentor
-                    Text.rich(
-                      TextSpan(
-                        children: [
-                          TextSpan(
-                            text: meeting.mentor,
-                            style: const TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
+                    Text(
+                      meeting.mentor,
+                      style:
+                          mentorTextStyle ??
+                          const TextStyle(fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 12),
 
-                    // Date
                     Row(
                       children: [
                         const Icon(
@@ -256,7 +230,6 @@ class MeetingCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 8),
 
-                    // Duration
                     Row(
                       children: [
                         const Icon(
@@ -300,19 +273,46 @@ class MeetingCard extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    OutlinedButton(
-                      onPressed: onCancel,
-                      style:
-                          cancelButtonStyle ??
-                          OutlinedButton.styleFrom(
-                            side: const BorderSide(color: Color(0xFF007BFF)),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30),
+                    // ✨ Gradient Cancel Button
+                    // ✨ Gradient Cancel Button with dynamic text and gradient
+                    if (cancelText != null && cancelText!.isNotEmpty)
+                    GestureDetector(
+                      onTap: onCancel,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(colors: cancelColors),
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        padding: const EdgeInsets.all(1.5),
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 20,
+                            vertical: 10,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          child: ShaderMask(
+                            shaderCallback:
+                                (bounds) => LinearGradient(
+                                  colors: cancelColors,
+                                ).createShader(bounds),
+                            blendMode: BlendMode.srcIn,
+                            child: Text(
+                              cancelText!,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 16,
+                              ),
                             ),
                           ),
-                      child: const Text('Cancel'),
+                        ),
+                      ),
                     ),
+
                     const SizedBox(width: 10),
+                    // Reschedule button
                     ElevatedButton(
                       onPressed: onReschedule,
                       style:

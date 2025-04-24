@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hiappy/core/constants/colors.dart';
+import 'package:hiappy/screens/home/PatientHome/AllMettings/AllMettings.dart';
+import 'package:hiappy/screens/home/PatientHome/InvitationsSession/InvitationsSession.dart';
 import 'package:hiappy/screens/home/PatientHome/SessionHistory/SessionHistory.dart';
 import 'package:hiappy/widgets/Invitations/Invitations.dart';
 import 'package:hiappy/widgets/Searchcard/Searchcard.dart';
@@ -96,10 +98,14 @@ final List<SessionHistoryItem> items =
       );
     }).toList();
 
-class MeetingScreen extends StatelessWidget {
+
+class TabMeetingScreen extends StatelessWidget {
+  const TabMeetingScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFF5F9FC),
       body: SingleChildScrollView(
         // Add scrollable functionality
         child: Padding(
@@ -107,7 +113,6 @@ class MeetingScreen extends StatelessWidget {
             0.0,
           ), // Adjusted padding for better look
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               /// First Card with Gradient Background
               Container(
@@ -180,7 +185,17 @@ class MeetingScreen extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               InvitationsList(
+                seeMoreLabel: 'See more',
+
+                onSeeMorePressed: () {
+                  Navigator.of(context, rootNavigator: false).push(
+                    MaterialPageRoute(
+                      builder: (context) => InvitationsSession(),
+                    ),
+                  );
+                },
                 invitations: [
+
                   Invitation(
                     title: 'Stress management tips!',
                     speaker: 'Dr. Dinesh Acharjya',
@@ -204,7 +219,7 @@ class MeetingScreen extends StatelessWidget {
                 seeMoreText: 'See more',
                 titleText: 'Session History',
                 onSeeMore: () {
-                  Navigator.of(context, rootNavigator: true).push(
+                  Navigator.of(context, rootNavigator: false).push(
                     MaterialPageRoute(builder: (context) => SessionHistory()),
                   );
                 },
@@ -213,9 +228,12 @@ class MeetingScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(bottom: 60),
                 child: SessionRequests(
-                  headerText: 'Session Requests',
+                  headerText: 'All Mettings',
                   actionText: 'See more',
-                  onActionClick: () {},
+
+                  onActionClick: () {Navigator.of(context, rootNavigator: false).push(
+                    MaterialPageRoute(builder: (context) => AllMeetings()),
+                  );},
                   onAccept: (session) => {},
                   onReject: (session) => {},
                   sessions: sessions,

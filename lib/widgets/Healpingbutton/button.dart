@@ -5,22 +5,27 @@ const double _buttonRadius = 30;
 
 Widget buildOutlinedButton({
   required String text,
-  required Color color,
+  Color? borderColor,
+  Color? textColor,
   VoidCallback? onPressed,
 }) {
+
   return IntrinsicWidth(
     child: SizedBox(
       height: _buttonHeight,
       child: OutlinedButton(
         onPressed: onPressed,
         style: OutlinedButton.styleFrom(
-          side: BorderSide(color: color),
+          side: BorderSide(color: borderColor!),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(_buttonRadius),
           ),
-          padding: const EdgeInsets.symmetric(horizontal: 24), // dynamic padding
+          padding: const EdgeInsets.symmetric(horizontal: 24),
         ),
-        child: Text(text, style: TextStyle(color: color)),
+        child: Text(
+          text,
+          style: TextStyle(color: textColor),
+        ),
       ),
     ),
   );
@@ -28,16 +33,20 @@ Widget buildOutlinedButton({
 
 Widget buildGradientButton({
   required String text,
+  List<Color>? gradientColors,
   VoidCallback? onPressed,
 }) {
+  final bool hasGradient = gradientColors != null && gradientColors.length >= 2;
+
   return IntrinsicWidth(
     child: SizedBox(
       height: _buttonHeight,
       child: DecoratedBox(
         decoration: BoxDecoration(
-          gradient: const LinearGradient(
-            colors: [Color(0xFF56CCF2), Color(0xFF2F80ED)],
-          ),
+          gradient: hasGradient
+              ? LinearGradient(colors: gradientColors!)
+              : null,
+          color: hasGradient ? null : Colors.grey[300],
           borderRadius: BorderRadius.circular(_buttonRadius),
         ),
         child: ElevatedButton(
@@ -48,9 +57,12 @@ Widget buildGradientButton({
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(_buttonRadius),
             ),
-            padding: const EdgeInsets.symmetric(horizontal: 24), // dynamic padding
+            padding: const EdgeInsets.symmetric(horizontal: 24),
           ),
-          child: Text(text, style: const TextStyle(color: Colors.white)),
+          child: Text(
+            text,
+            style: TextStyle(color: hasGradient ? Colors.white : Colors.black),
+          ),
         ),
       ),
     ),

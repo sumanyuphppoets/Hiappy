@@ -46,6 +46,7 @@ dependencies:
   shared_preferences: ^2.5.3
   persistent_bottom_nav_bar: ^6.2.1
   persistent_bottom_nav_bar_v2: ^5.3.1
+  intl: ^0.20.2
 
 flutter_launcher_icons:
   android: true              # ✅ Set to true, not "launcher_icon"

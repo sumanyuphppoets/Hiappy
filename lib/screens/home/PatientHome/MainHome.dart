@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hiappy/core/constants/colors.dart';
+import 'package:hiappy/screens/home/PatientHome/AllSession/AllSession.dart';
+import 'package:hiappy/screens/home/PatientHome/MettingRequest/MettingRequest.dart';
 import 'package:hiappy/widgets/MentorCard/MentorCard.dart';
 import 'package:hiappy/widgets/Sessionscard/SessionsCard.dart';
 import 'package:hiappy/widgets/UpcomingMeetings/UpcomingMeetings.dart';
@@ -29,193 +31,206 @@ class MainHome extends StatelessWidget {
         padding: const EdgeInsets.only(bottom: 0.0),
         child: Row(
           children: [
-          Expanded(
-            child: SingleChildScrollView(
-              // Make the Column scrollable
-              child: Column(
-                children: [
-                  const SizedBox(height: 10),
-                  const PerformanceCard(
-                    userName: 'Sumanyu',
-                    performanceLevel: 'Good',
-                  ),
-                  const SizedBox(height: 20),
-                  GradientButton(
-                    title: 'Have you taken a drink today?',
-                    borderRadius: 30,
-                    height: 60,
-                    width: 350,
-                    textSize: 16,
-                    gradient: const LinearGradient(
-                      colors: [AppColors.darkeBlue, AppColors.lightBlue],
-                      begin: Alignment.centerLeft,
-                      end: Alignment.centerRight,
+            Expanded(
+              child: SingleChildScrollView(
+                // Make the Column scrollable
+                child: Column(
+                  children: [
+                    const SizedBox(height: 10),
+                    const PerformanceCard(
+                      userName: 'Sumanyu',
+                      performanceLevel: 'Good',
                     ),
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          bool isChecked = true;
+                    const SizedBox(height: 20),
+                    GradientButton(
+                      title: 'Have you taken a drink today?',
+                      borderRadius: 30,
+                      height: 60,
+                      width: 350,
+                      textSize: 16,
+                      gradient: const LinearGradient(
+                        colors: [AppColors.darkeBlue, AppColors.lightBlue],
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
+                      ),
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            bool isChecked = true;
 
-                          return StatefulBuilder(
-                            builder: (context, setState) {
-                              return AlertDialog(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                contentPadding: const EdgeInsets.all(20),
-                                content: SizedBox(
-                                  width: 300,
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      const Text(
-                                        'Have you taken a drink today?',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 18,
-                                        ),
-                                      ),
-                                      const SizedBox(height: 20),
-                                      CheckboxListTile(
-                                        title: const Text(
-                                          'Yes, I had a drink today',
-                                        ),
-                                        value: isChecked,
-                                        onChanged: (bool? value) {
-                                          setState(() {
-                                            isChecked = true;
-                                          });
-                                        },
-                                      ),
-                                      CheckboxListTile(
-                                        title: const Text(
-                                          "No, I hadn't drink today",
-                                        ),
-                                        value: !isChecked,
-                                        onChanged: (bool? value) {
-                                          setState(() {
-                                            isChecked = false;
-                                          });
-                                        },
-                                      ),
-                                      const SizedBox(height: 20),
-                                      GestureDetector(
-                                        onTap: () {
-                                          Navigator.of(context).pop();
-                                          print(
-                                            "User response: ${isChecked ? 'Had a drink' : 'Hadn’t drink'}",
-                                          );
-                                        },
-                                        child: Container(
-                                          height: 50,
-                                          width: double.infinity,
-                                          alignment: Alignment.center,
-                                          decoration: BoxDecoration(
-                                            gradient: const LinearGradient(
-                                              colors: [
-                                                AppColors.darkeBlue,
-                                                AppColors.lightBlue,
-                                              ],
-                                              begin: Alignment.centerLeft,
-                                              end: Alignment.centerRight,
-                                            ),
-                                            borderRadius: BorderRadius.circular(
-                                              30,
-                                            ),
-                                          ),
-                                          child: const Text(
-                                            'Done',
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
+                            return StatefulBuilder(
+                              builder: (context, setState) {
+                                return AlertDialog(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20),
                                   ),
-                                ),
-                              );
-                            },
-                          );
-                        },
-                      );
-                    },
-                  ),
-                  const SizedBox(height: 20),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: TitleText(
-                        text: 'Your Mentor',
-                        textAlign: TextAlign.left,
-                        paddingBottom: 10,
+                                  contentPadding: const EdgeInsets.all(20),
+                                  content: SizedBox(
+                                    width: 300,
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        const Text(
+                                          'Have you taken a drink today?',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 20),
+                                        CheckboxListTile(
+                                          title: const Text(
+                                            'Yes, I had a drink today',
+                                          ),
+                                          value: isChecked,
+                                          onChanged: (bool? value) {
+                                            setState(() {
+                                              isChecked = true;
+                                            });
+                                          },
+                                        ),
+                                        CheckboxListTile(
+                                          title: const Text(
+                                            "No, I hadn't drink today",
+                                          ),
+                                          value: !isChecked,
+                                          onChanged: (bool? value) {
+                                            setState(() {
+                                              isChecked = false;
+                                            });
+                                          },
+                                        ),
+                                        const SizedBox(height: 20),
+                                        GestureDetector(
+                                          onTap: () {
+                                            Navigator.of(context).pop();
+                                            print(
+                                              "User response: ${isChecked ? 'Had a drink' : 'Hadn’t drink'}",
+                                            );
+                                          },
+                                          child: Container(
+                                            height: 50,
+                                            width: double.infinity,
+                                            alignment: Alignment.center,
+                                            decoration: BoxDecoration(
+                                              gradient: const LinearGradient(
+                                                colors: [
+                                                  AppColors.darkeBlue,
+                                                  AppColors.lightBlue,
+                                                ],
+                                                begin: Alignment.centerLeft,
+                                                end: Alignment.centerRight,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(30),
+                                            ),
+                                            child: const Text(
+                                              'Done',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                        );
+                      },
+                    ),
+                    const SizedBox(height: 20),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: TitleText(
+                          text: 'Your Mentor',
+                          textAlign: TextAlign.left,
+                          paddingBottom: 10,
+                        ),
                       ),
                     ),
-                  ),
-                  // Add spacing between the cards
-                  MentorCard(
-                    name: 'Sumanyu Singh Rathore',
-                    profession: 'Physical medicine & Rehabilitation',
-                    image: 'assets/images/avatar3.png',
-                    onCreateMeeting: () {},
-                    onCallNow: () {},
-                  ),
-                  const SizedBox(height: 40),
-                  MeetingCard(
-                    topicTextStyle: TextStyle(color: AppColors.grey),
-                    titleText: 'Stress management tips!',
-                    titleTextStyle: TextStyle(
-                      color: AppColors.royalBlue,
-                      fontSize: 18,
-                      fontFamily: 'Poppins',
-                      fontWeight: FontWeight.w500,
+                    // Add spacing between the cards
+                    MentorCard(
+                      name: 'Sumanyu Singh Rathore',
+                      profession: 'Physical medicine & Rehabilitation',
+                      image: 'assets/images/avatar3.png',
+                      onCreateMeeting: () {},
+                      onCallNow: () {},
                     ),
-                    headingText: 'Upcoming Meetings',
-                    seeMoreText: 'See more',
-                    rescheduleText: 'Re-schedule',
-                    meeting: meeting,
-                    onSeeMore: () {
-                      print("See more tapped");
-                    },
-                    onCancel: () {
-                      print("Meeting cancelled");
-                    },
-                    onReschedule: () {
-                      print("Meeting rescheduled");
-                    },
-                  ),
-                  const SizedBox(height: 40),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 40),
-                    child: SessionsCard(
-                    headingText: 'Running Meetings',
-                    seeMoreText: 'See more',
-                    imagePath: 'assets/images/Sessionimg.png',
-                    topic: 'Topic',
-                    subtitle: 'Anger management & benefits.',
-                    speaker: 'Dr. Dinesh Acharjya ',
-                    message: 'Physical medicine & Rehabilitation',
-                    duration: '30-45 min',
-                    time: '12:45 min',
-                    joinedCount: 50,
-                    buttonText: 'Join now',
-                    joinedAvatars: [
-                      "assets/images/avatar1.png",
-                      "assets/images/avatar2.png",
-                      "assets/images/avatar3.png",
-                    ],
-                  ),
-                  ),
-                ],
+                    const SizedBox(height: 40),
+                    MeetingCard(
+                      topicTextStyle: TextStyle(color: AppColors.grey),
+                      titleText: 'Stress management tips!',
+                      titleTextStyle: TextStyle(
+                        color: AppColors.royalBlue,
+                        fontSize: 18,
+                        fontFamily: 'Poppins',
+                        fontWeight: FontWeight.w500,
+                      ),
+                      headingText: 'Upcoming Meetings',
+                      seeMoreText: 'See more',
+                      rescheduleText: 'Re-schedule',
+                      cancelText: 'Cancel',
+                      cancelGradientColors: [
+                        AppColors.darkeBlue,
+                        AppColors.lightBlue,
+                      ],
+                      meeting: meeting,
+                      onSeeMore: () {
+                        Navigator.of(context, rootNavigator: false).push(
+                          MaterialPageRoute(builder: (context) => AllSession()),
+                        );
+                      },
+                      onCancel: () {
+                        print("Meeting cancelled");
+                      },
+                      onReschedule: () {
+                        print("Meeting rescheduled");
+                      },
+                    ),
+                    const SizedBox(height: 40),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 40),
+                      child: SessionsCard(
+                        headingText: 'Running Meetings',
+                        seeMoreText: 'See more',
+                        onSeeMore: () {
+                          Navigator.of(context, rootNavigator: false).push(
+                            MaterialPageRoute(
+                              builder: (context) => MeetingRequest(),
+                            ),
+                          );
+                        },
+                        imagePath: 'assets/images/Sessionimg.png',
+                        topic: 'Topic',
+                        subtitle: 'Anger management & benefits.',
+                        speaker: 'Dr. Dinesh Acharjya ',
+                        message: 'Physical medicine & Rehabilitation',
+                        duration: '30-45 min',
+                        time: '12:45 min',
+                        joinedCount: 50,
+                        buttonText: 'Join now',
+                        joinedAvatars: [
+                          "assets/images/avatar1.png",
+                          "assets/images/avatar2.png",
+                          "assets/images/avatar3.png",
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
-    ),
     );
   }
 }

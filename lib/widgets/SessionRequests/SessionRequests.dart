@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hiappy/core/constants/colors.dart';
 import 'package:hiappy/widgets/Healpingbutton/button.dart';
 
 class SessionData {
@@ -216,7 +217,8 @@ class _SessionRequestsState extends State<SessionRequests> {
               children: [
                 buildOutlinedButton(
               text: widget.rejectButtonText ?? "Reject",
-              color: Colors.blue,
+              textColor: Colors.blue,
+              borderColor: Colors.blue,
               onPressed: () {
                 if (widget.onReject != null) {
                   widget.onReject!(session);
@@ -225,7 +227,7 @@ class _SessionRequestsState extends State<SessionRequests> {
             ),
                 buildGradientButton(
               text: widget.acceptButtonText ?? "Accept",
-            
+            gradientColors: [AppColors.lightBlue, AppColors.darkeBlue],
               onPressed: () {
                 if (widget.onAccept != null) {
                   widget.onAccept!(session);

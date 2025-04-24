@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:hiappy/screens/home/PatientHome/CreateSessionScreen/CreateSessionScreen.dart';
 import 'package:hiappy/screens/home/PatientHome/MainHome.dart';
 import 'package:hiappy/screens/home/PatientHome/MainSessionScreen.dart';
+import 'package:hiappy/screens/home/PatientHome/ProfileSessionScreen/ProfileSessionScreen.dart';
+import 'package:hiappy/screens/home/PatientHome/ZoneSessionScreen/ZoneSessionScreen.dart';
 import 'package:hiappy/widgets/Bottomtabs/bottom_nav_screen.dart';
 import 'package:hiappy/widgets/CustomAppbar/PatientCustomAppbar.dart';
 import 'package:hiappy/widgets/Drawer/app_drawer.dart';
@@ -31,19 +34,19 @@ class _PatientHomeState extends State<PatientHome> {
       title: 'Create',
       inactiveSvgPath: 'assets/icons/Sessiontab.svg',
       activeSvgPath: 'assets/icons/Sessiontab.svg',
-      screen: MainSessionScreen(),
+      screen: CreateSessionScreen(),
     ),
     BottomTabItem(
       title: 'Zone',
       inactiveSvgPath: 'assets/icons/MarkzoneDeactivetab.svg',
       activeSvgPath: 'assets/icons/MarkzoneActivetab.svg',
-      screen: MainSessionScreen(),
+      screen: ZoneSessionScreen(),
     ),
     BottomTabItem(
       title: 'Profile',
       inactiveSvgPath: 'assets/icons/ProfileDeactivetab.svg',
       activeSvgPath: 'assets/icons/ProfileActivetab.svg',
-      screen: MainSessionScreen(),
+      screen: ProfileSessionScreen(),
     ),
   ];
 
@@ -56,20 +59,18 @@ class _PatientHomeState extends State<PatientHome> {
 
   @override
   Widget build(BuildContext context) {
+    final currentScreen = items[_selectedIndex].screen;
+
     return Scaffold(
       appBar: PatientCustomAppBar(
         centerImage: 'assets/images/StaySoberLogo.png',
         notificationIcon: 'assets/icons/Notificationicon.svg',
         sosIcon: 'assets/icons/SOSicon.svg',
-        onBack: ()=>({
-                       Navigator.of(context).maybePop(),
-        }),
-        isHomePage:
-            items[_selectedIndex].title ==
-            'Home', // HomePage flag is true when Home is selected
+        onBack: () => Navigator.of(context).maybePop(),
+        isHomePage: currentScreen is MainHome,
       ),
       drawer:
-          items[_selectedIndex].title == 'Home'
+          currentScreen is MainHome
               ? AppDrawer(
                 name: 'Sumanyu Singh Rathore',
                 email: 'sumanyusinghr@gmail.com',
@@ -87,13 +88,9 @@ class _PatientHomeState extends State<PatientHome> {
                   ),
                 ],
               )
-              : null, // Hide drawer when center tab (index 2) is selected
+              : null,
       body: SafeArea(
-        child: BottomNavBarScreen(
-          items: items,
-          onTabSelected:
-              _onTabSelected, // Pass the method to update the selected index
-        ),
+        child: BottomNavBarScreen(items: items, onTabSelected: _onTabSelected),
       ),
     );
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:hiappy/core/constants/colors.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hiappy/core/constants/colors.dart';
+import 'package:hiappy/widgets/Healpingbutton/button.dart';
 import 'package:hiappy/widgets/title_text.dart';
 
 class Invitation {
@@ -9,6 +10,8 @@ class Invitation {
   final DateTime? dateTime;
   final String? duration;
   final String? imagePath;
+  final Gradient? gradientBackground;
+final Gradient? gradientBorder;
 
   final VoidCallback? onAccept;
   final VoidCallback? onDecline;
@@ -20,6 +23,9 @@ class Invitation {
   final TextStyle? speakerStyle;
   final TextStyle? dateStyle;
   final TextStyle? durationStyle;
+
+  final List<Color>? acceptColors;
+  final List<Color>? declineColors;
 
   Invitation({
     this.title,
@@ -35,20 +41,32 @@ class Invitation {
     this.speakerStyle,
     this.dateStyle,
     this.durationStyle,
+    this.acceptColors,
+    this.declineColors,
+    this.gradientBackground,
+  this.gradientBorder,
+  
   });
 }
 
 class InvitationsList extends StatelessWidget {
   final List<Invitation> invitations;
+  final String? seeMoreLabel;
+  final VoidCallback? onSeeMorePressed;
 
-  const InvitationsList({super.key, required this.invitations});
+  const InvitationsList({
+    super.key,
+    required this.invitations,
+    this.seeMoreLabel,
+    this.onSeeMorePressed,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (invitations.isNotEmpty)
+        if (invitations.isNotEmpty && seeMoreLabel != null && onSeeMorePressed != null)
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: Row(
@@ -62,10 +80,10 @@ class InvitationsList extends StatelessWidget {
                   ),
                 ),
                 TextButton(
-                  onPressed: () {},
-                  child: const Text(
-                    'See more',
-                    style: TextStyle(color: Colors.black),
+                  onPressed: onSeeMorePressed,
+                  child: Text(
+                    seeMoreLabel!,
+                    style: const TextStyle(color: Colors.black),
                   ),
                 ),
               ],
@@ -112,6 +130,7 @@ class InvitationCard extends StatelessWidget {
     return months[month];
   }
 
+
   @override
   Widget build(BuildContext context) {
     String? formattedDateTime;
@@ -152,8 +171,7 @@ class InvitationCard extends StatelessWidget {
                       if (invitation.title != null)
                         Text(
                           invitation.title!,
-                          style:
-                              invitation.titleStyle ??
+                          style: invitation.titleStyle ??
                               const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w600,
@@ -164,8 +182,7 @@ class InvitationCard extends StatelessWidget {
                         const SizedBox(height: 4),
                         Text(
                           'Speaker: ${invitation.speaker}',
-                          style:
-                              invitation.speakerStyle ??
+                          style: invitation.speakerStyle ??
                               const TextStyle(
                                 fontSize: 14,
                                 color: Colors.black87,
@@ -206,8 +223,7 @@ class InvitationCard extends StatelessWidget {
                             const SizedBox(width: 4),
                             Text(
                               invitation.duration!,
-                              style:
-                                  invitation.durationStyle ??
+                              style: invitation.durationStyle ??
                                   const TextStyle(fontSize: 13),
                             ),
                           ],
@@ -216,37 +232,56 @@ class InvitationCard extends StatelessWidget {
                       const Spacer(),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
+                        
                         children: [
+                          
                           if (invitation.onDecline != null)
-                            TextButton(
+                          invitation.declineColors != null &&
+                                    invitation.declineColors!.isNotEmpty ?
+                            buildOutlinedButton(
+                              borderColor: invitation.declineColors?.first,
+                              textColor: AppColors.info,
+                              text: invitation.declineLabel ?? 'Decline',
+                            )
+                          
+                          :  TextButton(
                               onPressed: invitation.onDecline,
                               child: Text(
-                                invitation.declineLabel ?? '',
-                                style: const TextStyle(color: Colors.grey),
+                                invitation.declineLabel ?? 'Decline',
+                                style: const TextStyle(
+                                  color: Colors.grey,
+                                ),
                               ),
                             ),
                           if (invitation.onAccept != null)
                             const SizedBox(width: 8),
                           if (invitation.onAccept != null)
-                            TextButton(
-                              onPressed: invitation.onAccept,
-                              child: Text(
-                                invitation.acceptLabel ?? '',
-                                style: const TextStyle(
-                                  color: Color(0xFF007BFF),
-                                ),
-                              ),
-                            ),
+                            invitation.acceptColors != null &&
+                                    invitation.acceptColors!.isNotEmpty
+                                ? buildGradientButton(
+                                    onPressed: invitation.onAccept,
+                                    gradientColors: invitation.acceptColors,
+                                    text: invitation.acceptLabel ?? 'Accept',
+                                  )
+                                : TextButton(
+                                    onPressed: invitation.onAccept,
+                                    child: Text(
+                                      invitation.acceptLabel ?? 'Accept',
+                                      style: const TextStyle(
+                                        color: Color(0xFF007BFF),
+                                      ),
+                                    ),
+                                  ),
+                        ],
+                      )
                         ],
                       ),
-                    ],
+                    ),
                   ),
-                ),
+                ],
               ),
-            ],
           ),
-        ),
       ),
-    );
+    );  
   }
 }

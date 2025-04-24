@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hiappy/core/constants/colors.dart';
+import 'package:hiappy/screens/home/PatientHome/AllMettings/AllMettings.dart';
+import 'package:hiappy/screens/home/PatientHome/AllSession/AllSession.dart';
 import 'package:hiappy/screens/home/PatientHome/SessionHistory/SessionHistory.dart';
 import 'package:hiappy/widgets/CustomInput.dart';
 import 'package:hiappy/widgets/Searchcard/Searchcard.dart';
@@ -15,7 +17,7 @@ final Meeting meeting = Meeting(
   mentor: "Abhijeet Patel",
   dateTime: DateTime(2024, 7, 20, 12, 45),
   duration: "30-45 min",
-  platform: "Zoom", // ✅ Corrected from "Via Zoom"
+  platform: "Via Zoom", // ✅ Corrected from "Via Zoom"
 );
 
 List<SessionData> sessions = [
@@ -96,10 +98,9 @@ final List<SessionHistoryItem> items =
         duration: data['duration'] ?? '',
       );
     }).toList();
-void main() => runApp(MaterialApp(home: SessionScreen()));
 
-class SessionScreen extends StatelessWidget {
-  const SessionScreen({super.key});
+class TabSessionScreen extends StatelessWidget {
+  const TabSessionScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +108,6 @@ class SessionScreen extends StatelessWidget {
       backgroundColor: const Color(0xFFF5F9FC),
       body: SingleChildScrollView(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const SizedBox(height: 40),
             Container(
@@ -193,7 +193,6 @@ class SessionScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 30),
-
             // 🗓️ Upcoming Meeting Card
             MeetingCard(
               topicTextStyle: const TextStyle(color: AppColors.grey),
@@ -214,14 +213,19 @@ class SessionScreen extends StatelessWidget {
             SessionRequests(
               headerText: 'Session Requests',
               actionText: 'See more',
-              onActionClick: () {},
+              onActionClick: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => AllMeetings(),
+                    ),
+                  );},
               onAccept: (session) => {},
               onReject: (session) => {},
               sessions: sessions,
             ),
             const SizedBox(height: 30),
             Padding(
-              padding: const EdgeInsets.only(bottom: 40),
+              padding: const EdgeInsets.only(bottom: 0),
               child: SearchCardList(
                 seeMoreText: 'See more',
                 titleText: 'Session History',
@@ -234,7 +238,35 @@ class SessionScreen extends StatelessWidget {
                   );
                 },
               ),
+            ),  
+            const SizedBox(height: 30),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 40),
+              child: MeetingCard(
+              topicTextStyle: const TextStyle(color: AppColors.grey),
+              titleText: 'Stress management tips!',
+              titleTextStyle: const TextStyle(
+                color: AppColors.royalBlue,
+                fontSize: 18,
+                fontFamily: 'Poppins',
+                fontWeight: FontWeight.w500,
+              ),
+              headingText: 'All Session',
+              rescheduleText: 'Re-schedule',
+              seeMoreText: 'See more',
+              onSeeMore: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => AllSession(),
+                  ),
+                );
+              },
+              meeting: meeting,
+              onCancel: () => print("Meeting cancelled"),
+              onReschedule: () => print("Meeting rescheduled"),
             ),
+            ),            // 🗓️ Upcoming Meeting Card
+            
           ],
         ),
       ),
