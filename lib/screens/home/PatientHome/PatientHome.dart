@@ -67,10 +67,10 @@ class _PatientHomeState extends State<PatientHome> {
         notificationIcon: 'assets/icons/Notificationicon.svg',
         sosIcon: 'assets/icons/SOSicon.svg',
         onBack: () => Navigator.of(context).maybePop(),
-        isHomePage: currentScreen is MainHome,
+        isHomePage: currentScreen is MainHome || currentScreen is CreateSessionScreen || currentScreen is ZoneSessionScreen || currentScreen is ProfileSessionScreen || currentScreen is MainSessionScreen,
       ),
       drawer:
-          currentScreen is MainHome
+          currentScreen is MainHome || currentScreen is CreateSessionScreen || currentScreen is ZoneSessionScreen || currentScreen is ProfileSessionScreen || currentScreen is MainSessionScreen
               ? AppDrawer(
                 name: 'Sumanyu Singh Rathore',
                 email: 'sumanyusinghr@gmail.com',
