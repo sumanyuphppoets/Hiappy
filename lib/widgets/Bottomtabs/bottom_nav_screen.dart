@@ -32,23 +32,6 @@ class BottomNavBarScreen extends StatefulWidget {
 
 class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
   int _currentIndex = 0;
-  bool _isSwitching = false;
-
-  void _onTabTap(int index) async {
-    if (_currentIndex == index || _isSwitching) return;
-
-    setState(() => _isSwitching = true);
-
-    setState(() {
-      _currentIndex = index;
-    });
-
-    widget.onTabSelected(index);
-
-    // Debounce duration to avoid multiple fast taps
-    await Future.delayed(const Duration(milliseconds: 200));
-    setState(() => _isSwitching = false);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,10 +42,7 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
     return Scaffold(
       body: Stack(
         children: [
-          AnimatedSwitcher(
-            duration: const Duration(milliseconds: 300),
-            child: widget.items[_currentIndex].screen,
-          ),
+          widget.items[_currentIndex].screen,
           Positioned(
             left: 0,
             right: 0,
@@ -76,17 +56,26 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
             right: 0,
             child: Center(
               child: GestureDetector(
-                onTap: () => _onTabTap(centerIndex),
+                onTap: () {
+                  setState(() {
+                    _currentIndex = centerIndex;
+                  });
+                  widget.onTabSelected(centerIndex);
+                },
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    SvgPicture.asset(
-                      isCenterActive
-                          ? centerItem.activeSvgPath
-                          : centerItem.inactiveSvgPath,
-                      height: 80,
-                      width: 80,
+                    Container(
+                      padding: const EdgeInsets.all(10),
+                      child: SvgPicture.asset(
+                        isCenterActive
+                            ? centerItem.activeSvgPath
+                            : centerItem.inactiveSvgPath,
+                        height: 70,
+                        width: 70,
+                      ),
                     ),
+                    const SizedBox(height: 0),
                     ShaderMask(
                       shaderCallback: (bounds) => LinearGradient(
                         colors: isCenterActive
@@ -134,12 +123,16 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
           if (index == centerIndex) {
             return const SizedBox(width: 70); // Space for center button
           }
-
           final item = widget.items[index];
           final isActive = _currentIndex == index;
 
           return GestureDetector(
-            onTap: () => _onTabTap(index),
+            onTap: () {
+              setState(() {
+                _currentIndex = index;
+              });
+              widget.onTabSelected(index);
+            },
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
