@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hiappy/core/constants/colors.dart';
-import 'package:hiappy/screens/home/PatientHome/InvitationsSession/InvitationsSession.dart';
 import 'package:hiappy/widgets/Invitations/Invitations.dart';
 
 class MeetingsScreen extends StatelessWidget {

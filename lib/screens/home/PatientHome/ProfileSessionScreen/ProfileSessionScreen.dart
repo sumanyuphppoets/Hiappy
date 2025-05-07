@@ -1,146 +1,233 @@
 import 'package:flutter/material.dart';
+import 'package:hiappy/core/constants/colors.dart';
+import 'package:hiappy/widgets/CustomAccordion/CustomAccordion.dart';
 
-class ProfileSessionScreen extends StatefulWidget {
+class ProfileSessionScreen extends StatelessWidget {
   const ProfileSessionScreen({Key? key}) : super(key: key);
 
   @override
-  State<ProfileSessionScreen> createState() => _ProfileSessionScreenState();
-}
-
-class _ProfileSessionScreenState extends State<ProfileSessionScreen> {
-  int _expandedIndex = -1; // No section expanded initially
-
-  void _handleExpansion(int index) {
-    setState(() {
-      if (_expandedIndex == index) {
-        _expandedIndex = -1; // Close if already open
-      } else {
-        _expandedIndex = index; // Open selected, close others
-      }
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final sections = [
+      {
+        'title': 'Personal Details',
+        'items': [
+          {
+            'label': 'Email',
+            'value': 'myaddress@mail.com',
+            'iconSvg': 'assets/icons/profile_email.svg',
+          },
+          {
+            'label': 'Phone Number',
+            'value': '+91 7014132321',
+            'iconSvg': 'assets/icons/Profile_number.svg',
+          },
+          {
+            'label': 'Date of Birth',
+            'value': '19/09/1995',
+            'iconSvg': 'assets/icons/Date_of_Birth.svg',
+          },
+          {
+            'label': 'Gender',
+            'value': 'Male',
+            'iconSvg': 'assets/icons/Gender.svg',
+          },
+          {
+            'label': 'Emergency Contact',
+            'value': '+91 xxxx-xxxxxx',
+            'iconSvg': 'assets/icons/Profile_number.svg',
+          },
+          {
+            'label': 'Home Address',
+            'value': 'Shyam Lal Rd, Daryaganj, Delhi',
+            'iconSvg': 'assets/icons/Profile_location.svg',
+          },
+        ],
+      },
+      {
+        'title': 'Rehab Center Details',
+        'items': [
+          {
+            'label': 'Rehab Center Name',
+            'value': 'New Life Line Rehabilitation Center',
+            'iconSvg': 'assets/icons/Center_Name.svg',
+          },
+          {
+            'label': 'Preferred Mentor',
+            'value': 'Abhijit Patel',
+            'iconSvg': 'assets/icons/Mentor.svg',
+          },
+          {
+            'label': 'Phone Number (Rehab)',
+            'value': '+91 xxxx-xxxxxx',
+            'iconSvg': 'assets/icons/Profile_number.svg',
+          },
+          {
+            'label': 'Medical History',
+            'value': 'No',
+            'iconSvg': 'assets/icons/Medical_History.svg',
+          },
+          {
+            'label': 'Rehab Center Address',
+            'value': 'Daryaganj, Delhi, 110002, India',
+            'iconSvg': 'assets/icons/Profile_location.svg',
+          },
+        ],
+      },
+      {
+        'title': 'Password',
+        'items': [
+          {
+            'label': 'Current Password',
+            'value': '••••••••',
+            'iconSvg': 'assets/icons/Password.svg',
+          },
+        ],
+      },
+    ];
+
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            const SizedBox(height: 20),
-            _buildProfileCard(),
-            const SizedBox(height: 20),
-            _buildAccordionTile(
-              index: 0,
-              title: 'Personal Details',
-              content: 'Here are your personal details...',
-            ),
-            _buildAccordionTile(
-              index: 1,
-              title: 'Rehab Center Details',
-              content: 'Here are your rehab center details...',
-            ),
-            _buildAccordionTile(
-              index: 2,
-              title: 'Password',
-              content: 'Change your password here...',
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+      backgroundColor: AppColors.lightBlueTransparent,
+      body: CustomScrollView(
+        slivers: [
+          // SliverAppBar to create the fixed profile card
+          SliverAppBar(
+            expandedHeight: 300,
+            floating: false,
+            pinned: true,
+            backgroundColor: Colors.transparent,
+            flexibleSpace: FlexibleSpaceBar(
+              background: Stack(
+                children: [
+                  // Background image
+                  Positioned(
+                    top: 0, // Set top position if necessary
+                    left: 0,
+                    right: 0,
+                    height: 200, // Set a specific height for the image
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage('assets/images/Profile_bg_img.png'),
+                          fit: BoxFit.cover, // Image will fill the container
+                        ),
+                      ),
+                    ),
+                  ),
+                  // Positioned profile card content
+                  Positioned(
+                    top: 130,
+                    left: 20,
+                    right: 20,
+                    child: Material(
+                      elevation: 8,
+                      borderRadius: BorderRadius.circular(20),
+                      child: Stack(
+                        clipBehavior: Clip.none,
+                        children: [
+                          // Card content
+                          Container(
+                            padding: const EdgeInsets.only(
+                              top: 56,
+                              bottom: 16,
+                              left: 20,
+                              right: 20,
+                            ),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              gradient: const LinearGradient(
+                                colors: [Color(0xFF5B86E5), Color(0xFF36D1DC)],
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black12,
+                                  blurRadius: 8,
+                                  offset: Offset(0, 4),
+                                ),
+                              ],
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: const [
+                                      Text(
+                                        'Sumanyu Singh Rathore',
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      SizedBox(height: 4),
+                                      Text(
+                                        'Age: 28',
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                const Icon(Icons.edit, color: Colors.white),
+                              ],
+                            ),
+                          ),
 
-  Widget _buildProfileCard() {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 16),
-      padding: const EdgeInsets.only(top: 20, bottom: 16),
-      decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          colors: [Color(0xFF5DB9FF), Color(0xFF6E73FF)],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Stack(
-        clipBehavior: Clip.none,
-        children: [
-          Column(
-            children: [
-              CircleAvatar(
-                radius: 40,
-                backgroundImage: NetworkImage(
-                  'https://randomuser.me/api/portraits/men/75.jpg', // Example image
-                ),
+                          // Positioned avatar (half above card)
+                          Positioned(
+                            top: -40, // Half the avatar height
+                            left: 0,
+                            right: 0,
+                            child: Center(
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                    color: Colors.white,
+                                    width: 4,
+                                  ),
+                                ),
+                                child: const CircleAvatar(
+                                  radius: 40,
+                                  backgroundImage: AssetImage(
+                                    'assets/images/profile.jpg',
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
-              const SizedBox(height: 12),
-              const Text(
-                'Nitin Kumar',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 4),
-              const Text(
-                'Age: 28',
-                style: TextStyle(
-                  color: Colors.white70,
-                  fontSize: 14,
-                ),
-              ),
-            ],
-          ),
-          Positioned(
-            top: 8,
-            right: 8,
-            child: IconButton(
-              icon: const Icon(Icons.edit, color: Colors.white),
-              onPressed: () {
-                // Edit profile action
-              },
             ),
           ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildAccordionTile({
-    required int index,
-    required String title,
-    required String content,
-  }) {
-    bool isExpanded = _expandedIndex == index;
-
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black12,
-            blurRadius: 6,
-            offset: Offset(0, 3),
-          ),
-        ],
-      ),
-      child: ExpansionTile(
-        initiallyExpanded: isExpanded,
-        onExpansionChanged: (_) => _handleExpansion(index),
-        title: Text(
-          title,
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        trailing: const Icon(Icons.edit, color: Colors.grey),
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Text(content),
+          // Content section (scrollable)
+          SliverList(
+            delegate: SliverChildBuilderDelegate((context, index) {
+              var section = sections[index];
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: CustomAccordion(
+                  title: section['title'] as String,
+                  items: section['items'] as List<Map<String, String>>,
+                  onEdit: () {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Edit ${section['title']}')),
+                    );
+                  },
+                ),
+              );
+            }, childCount: sections.length),
           ),
         ],
       ),

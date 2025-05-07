@@ -44,7 +44,7 @@ Widget buildGradientButton({
       child: DecoratedBox(
         decoration: BoxDecoration(
           gradient: hasGradient
-              ? LinearGradient(colors: gradientColors!)
+              ? LinearGradient(colors: gradientColors)
               : null,
           color: hasGradient ? null : Colors.grey[300],
           borderRadius: BorderRadius.circular(_buttonRadius),

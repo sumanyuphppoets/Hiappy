@@ -50,6 +50,7 @@ dependencies:
   google_maps_flutter: ^2.12.1
   geolocator: ^14.0.0
   permission_handler: ^12.0.0+1
+  accordion: ^2.6.0
 
 flutter_launcher_icons:
   android: true              # ✅ Set to true, not "launcher_icon"
@@ -141,6 +142,15 @@ flutter:
   - assets/images/Congratulation.png
   - assets/images/History_img.png
   - assets/images/Invitations.png
+  - assets/images/Profile_bg_img.png
+  - assets/icons/profile_email.svg
+  - assets/icons/Profile_number.svg
+  - assets/icons/Date_of_Birth.svg
+  - assets/icons/Gender.svg
+  - assets/icons/Profile_location.svg
+  - assets/icons/Medical_History.svg
+  - assets/icons/Mentor.svg
+  - assets/icons/Center_Name.svg
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
