@@ -151,6 +151,15 @@ flutter:
   - assets/icons/Medical_History.svg
   - assets/icons/Mentor.svg
   - assets/icons/Center_Name.svg
+  - assets/images/Drawerlogo.svg
+  - assets/icons/Subscription.svg
+  - assets/icons/Account.svg
+  - assets/icons/Language.svg
+  - assets/icons/Help.svg
+  - assets/icons/Terms.svg
+  - assets/icons/About.svg
+  - assets/icons/Privacy.svg
+  - assets/icons/Logout.svg
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

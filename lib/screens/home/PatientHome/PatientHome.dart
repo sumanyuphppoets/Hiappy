@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:hiappy/screens/home/PatientHome/CreateSessionScreen/CreateSessionScreen.dart';
 import 'package:hiappy/screens/home/PatientHome/MainHome.dart';
 import 'package:hiappy/screens/home/PatientHome/MainSessionScreen.dart';
@@ -67,26 +68,116 @@ class _PatientHomeState extends State<PatientHome> {
         notificationIcon: 'assets/icons/Notificationicon.svg',
         sosIcon: 'assets/icons/SOSicon.svg',
         onBack: () => Navigator.of(context).maybePop(),
-        isHomePage: currentScreen is MainHome || currentScreen is CreateSessionScreen || currentScreen is ZoneSessionScreen || currentScreen is ProfileSessionScreen || currentScreen is MainSessionScreen,
+        isHomePage:
+            currentScreen is MainHome
       ),
       drawer:
-          currentScreen is MainHome || currentScreen is CreateSessionScreen || currentScreen is ZoneSessionScreen || currentScreen is ProfileSessionScreen || currentScreen is MainSessionScreen
-              ? AppDrawer(
-                name: 'Sumanyu Singh Rathore',
-                email: 'sumanyusinghr@gmail.com',
-                role: 'Patient',
-                customTiles: [
-                  ListTile(
-                    leading: Icon(Icons.medical_services),
-                    title: Text('Appointments'),
-                    onTap: () => Navigator.pop(context),
+          currentScreen is MainHome ||
+                  currentScreen is CreateSessionScreen ||
+                  currentScreen is ZoneSessionScreen ||
+                  currentScreen is ProfileSessionScreen ||
+                  currentScreen is MainSessionScreen
+              ? Drawer(
+                child: Container(
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [Color(0xFF4D66E2), Color(0xFF3ABAEB)],
+                      begin: Alignment.topLeft,
+                      end: Alignment.topRight,
+                    ),
                   ),
-                  ListTile(
-                    leading: Icon(Icons.settings),
-                    title: Text('Settings'),
-                    onTap: () => Navigator.pop(context),
+                  child: SafeArea(
+                    child: Column(
+                      children: [
+                        // Header with title and close button
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 16.0,
+                            vertical: 12.0,
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              SvgPicture.asset(
+                                'assets/images/Drawerlogo.svg',
+                                height: 60,
+                              ),
+                              IconButton(
+                                icon: const Icon(
+                                  Icons.close,
+                                  color: Colors.white,
+                                ),
+                                onPressed: () => Navigator.pop(context),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const Divider(color: Colors.white30, thickness: 0.5),
+                        const SizedBox(height: 10),
+                        // Drawer tiles
+                        Expanded(
+                          child: ListView(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 8.0,
+                            ),
+                            children: [
+                              DrawerTile(
+                                svgPath: 'assets/icons/Subscription.svg',
+                                title: 'Manage Subscription',
+                                onTap: () => Navigator.pop(context),
+                              ),
+                              DrawerTile(
+                                svgPath: 'assets/icons/Account.svg',
+                                title: 'Account Settings',
+                                onTap: () => Navigator.pop(context),
+                              ),
+                              DrawerTile(
+                                svgPath: 'assets/icons/Language.svg',
+                                title: 'Change Language',
+                                onTap: () => Navigator.pop(context),
+                              ),
+                              DrawerTile(
+                                svgPath: 'assets/icons/Help.svg',
+                                title: 'Help & Support',
+                                onTap: () => Navigator.pop(context),
+                              ),
+                              DrawerTile(
+                                svgPath: 'assets/icons/Terms.svg',
+                                title: 'Terms of Services',
+                                onTap: () => Navigator.pop(context),
+                              ),
+                              DrawerTile(
+                                svgPath: 'assets/icons/About.svg',
+                                title: 'About',
+                                onTap: () => Navigator.pop(context),
+                              ),
+                              DrawerTile(
+                                svgPath: 'assets/icons/Privacy.svg',
+                                title: 'Privacy Policy',
+                                onTap: () => Navigator.pop(context),
+                              ),
+                              DrawerTile(
+                                svgPath: 'assets/icons/Logout.svg',
+                                title: 'Logout',
+                                onTap: () => Navigator.pop(context),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.only(bottom: 12.0),
+                          child: Text(
+                            'Update version 0.0.1',
+                            style: TextStyle(
+                              color: Colors.white60,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ],
+                ),
               )
               : null,
       body: SafeArea(
