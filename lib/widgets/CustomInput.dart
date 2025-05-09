@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'custom_dropdown.dart'; // Import the CustomDropdown widget
+import 'custom_dropdown.dart'; // Your dropdown widget
 
 class CustomInput extends StatefulWidget {
   final String? label;
@@ -17,6 +17,9 @@ class CustomInput extends StatefulWidget {
   final String? initialDropdownValue;
   final void Function(String?)? onChanged;
 
+  // NEW: Accept external style
+  final InputDecoration? decoration;
+
   const CustomInput({
     Key? key,
     this.label,
@@ -32,6 +35,7 @@ class CustomInput extends StatefulWidget {
     this.dropdownItems,
     this.initialDropdownValue,
     this.onChanged,
+    this.decoration,
   }) : super(key: key);
 
   @override
@@ -61,60 +65,59 @@ class _CustomInputState extends State<CustomInput> {
           ),
         const SizedBox(height: 8),
 
-        // Use CustomDropdown for dropdown logic
         isDropdown
             ? CustomDropdown(
-              items: widget.dropdownItems!,
-              initialValue: widget.initialDropdownValue,
-              onChanged: widget.onChanged,
-              validator: widget.validator,
-              hint: widget.hint,
-            )
+                items: widget.dropdownItems!,
+                initialValue: widget.initialDropdownValue,
+                onChanged: widget.onChanged,
+                validator: widget.validator,
+                hint: widget.hint,
+              )
             : TextFormField(
-              controller: widget.controller,
-              obscureText: _obscure,
-              keyboardType: widget.keyboardType,
-              maxLines: widget.maxLines,
-              validator: widget.validator,
-              autovalidateMode: AutovalidateMode.onUserInteraction,
-              decoration: _inputDecoration(
-                suffix:
-                    widget.obscureText
-                        ? IconButton(
-                          icon: Icon(
-                            _obscure ? Icons.visibility_off : Icons.visibility,
-                            color: Colors.grey,
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              _obscure = !_obscure;
-                            });
-                          },
-                        )
-                        : null,
+                controller: widget.controller,
+                obscureText: _obscure,
+                keyboardType: widget.keyboardType,
+                maxLines: widget.maxLines,
+                validator: widget.validator,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                decoration: widget.decoration ??
+                    _defaultDecoration(
+                      hint: widget.hint,
+                      suffix: widget.obscureText
+                          ? IconButton(
+                              icon: Icon(
+                                _obscure ? Icons.visibility_off : Icons.visibility,
+                                color: Colors.grey,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  _obscure = !_obscure;
+                                });
+                              },
+                            )
+                          : null,
+                    ),
               ),
-            ),
         const SizedBox(height: 16),
       ],
     );
   }
 
-  InputDecoration _inputDecoration({Widget? suffix}) {
+  InputDecoration _defaultDecoration({required String hint, Widget? suffix}) {
     return InputDecoration(
-      hintText: widget.hint,
-      prefixIcon:
-          widget.iconAsset != null
-              ? Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: SvgPicture.asset(
-                  widget.iconAsset!,
-                  width: widget.iconSize,
-                  height: widget.iconSize,
-                ),
-              )
-              : null,
+      hintText: hint,
+      prefixIcon: widget.iconAsset != null
+          ? Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: SvgPicture.asset(
+                widget.iconAsset!,
+                width: widget.iconSize,
+                height: widget.iconSize,
+              ),
+            )
+          : null,
       suffixIcon: suffix,
-      errorStyle: const TextStyle(height: 0), // Hide error text
+      errorStyle: const TextStyle(height: 0),
       contentPadding: const EdgeInsets.symmetric(vertical: 18, horizontal: 16),
       border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
       enabledBorder: OutlineInputBorder(

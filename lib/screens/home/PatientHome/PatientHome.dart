@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:hiappy/screens/home/PatientHome/AccountSettings/AccountSettings.dart';
 import 'package:hiappy/screens/home/PatientHome/CreateSessionScreen/CreateSessionScreen.dart';
 import 'package:hiappy/screens/home/PatientHome/MainHome.dart';
 import 'package:hiappy/screens/home/PatientHome/MainSessionScreen.dart';
 import 'package:hiappy/screens/home/PatientHome/ProfileSessionScreen/ProfileSessionScreen.dart';
+import 'package:hiappy/screens/home/PatientHome/Subscriptions/Subscriptions.dart' show Subscriptions;
 import 'package:hiappy/screens/home/PatientHome/ZoneSessionScreen/ZoneSessionScreen.dart';
 import 'package:hiappy/widgets/Bottomtabs/bottom_nav_screen.dart';
 import 'package:hiappy/widgets/CustomAppbar/PatientCustomAppbar.dart';
 import 'package:hiappy/widgets/Drawer/app_drawer.dart';
 
 class PatientHome extends StatefulWidget {
+  const PatientHome({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _PatientHomeState createState() => _PatientHomeState();
 }
 
@@ -68,8 +73,7 @@ class _PatientHomeState extends State<PatientHome> {
         notificationIcon: 'assets/icons/Notificationicon.svg',
         sosIcon: 'assets/icons/SOSicon.svg',
         onBack: () => Navigator.of(context).maybePop(),
-        isHomePage:
-            currentScreen is MainHome
+        isHomePage: currentScreen is MainHome,
       ),
       drawer:
           currentScreen is MainHome ||
@@ -124,12 +128,24 @@ class _PatientHomeState extends State<PatientHome> {
                               DrawerTile(
                                 svgPath: 'assets/icons/Subscription.svg',
                                 title: 'Manage Subscription',
-                                onTap: () => Navigator.pop(context),
+                                onTap: () {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) => Subscriptions(),
+                                    ),
+                                  );
+                                },
                               ),
                               DrawerTile(
                                 svgPath: 'assets/icons/Account.svg',
                                 title: 'Account Settings',
-                                onTap: () => Navigator.pop(context),
+                                onTap: () {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) => AccountSettings(),
+                                    ),
+                                  );
+                                },
                               ),
                               DrawerTile(
                                 svgPath: 'assets/icons/Language.svg',

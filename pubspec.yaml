@@ -160,6 +160,7 @@ flutter:
   - assets/icons/About.svg
   - assets/icons/Privacy.svg
   - assets/icons/Logout.svg
+  - assets/images/Renewal.png
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
