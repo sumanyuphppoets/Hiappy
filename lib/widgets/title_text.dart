@@ -5,11 +5,12 @@ class TitleText extends StatelessWidget {
   final double fontSize;
   final FontWeight fontWeight;
   final Color color;
-  final TextAlign textAlign;
+  final TextAlign? textAlign;
   final int? maxLines;
   final TextOverflow overflow;
   final double paddingTop;
   final double paddingBottom;
+  final TextDecoration? textDecoration; 
 
   const TitleText({
     super.key,
@@ -17,11 +18,12 @@ class TitleText extends StatelessWidget {
     this.fontSize = 20,
     this.fontWeight = FontWeight.w600,
     this.color = Colors.black,
-    this.textAlign = TextAlign.center,
+    this.textAlign,
     this.maxLines,
     this.overflow = TextOverflow.visible,
     this.paddingTop = 0,
     this.paddingBottom = 0,
+    this.textDecoration,
   });
 
   @override
@@ -37,6 +39,7 @@ class TitleText extends StatelessWidget {
           fontSize: fontSize,
           fontWeight: fontWeight,
           color: color,
+          decoration: textDecoration,
         ),
       ),
     );
