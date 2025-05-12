@@ -46,6 +46,7 @@ class AllSession extends StatelessWidget {
             padding: padding,
             child: MeetingCard(
               topicTextStyle: const TextStyle(color: AppColors.grey),
+              
               titleText: meeting.topic,
               titleTextStyle: const TextStyle(
                 color: AppColors.royalBlue,

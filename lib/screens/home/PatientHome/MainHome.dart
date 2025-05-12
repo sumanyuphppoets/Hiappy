@@ -201,6 +201,7 @@ class MainHome extends StatelessWidget {
                       child: SessionsCard(
                         headingText: 'Running Meetings',
                         seeMoreText: 'See more',
+                        
                         onSeeMore: () {
                           Navigator.of(context, rootNavigator: false).push(
                             MaterialPageRoute(

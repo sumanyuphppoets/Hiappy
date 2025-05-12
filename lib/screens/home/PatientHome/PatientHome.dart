@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hiappy/features/auth/presentation/login.dart';
+import 'package:hiappy/features/auth/presentation/role_selection_screen.dart';
 import 'package:hiappy/screens/home/PatientHome/About/About.dart';
 import 'package:hiappy/screens/home/PatientHome/AccountSettings/AccountSettings.dart';
 import 'package:hiappy/screens/home/PatientHome/CreateSessionScreen/CreateSessionScreen.dart';
@@ -227,7 +228,7 @@ class _PatientHomeState extends State<PatientHome> {
                                     Navigator.pushAndRemoveUntil(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (_) => LoginPage(),
+                                        builder: (_) => RoleSelectionScreen(),
                                       ), // replace with your actual login screen
                                       (route) => false,
                                     );
