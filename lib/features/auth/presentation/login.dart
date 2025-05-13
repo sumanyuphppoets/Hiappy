@@ -1,11 +1,9 @@
 import 'dart:io';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hiappy/core/constants/colors.dart';
 import 'package:hiappy/features/auth/presentation/login_otp.dart';
-import 'package:hiappy/features/auth/presentation/otp_screen.dart';
 import 'package:hiappy/features/auth/presentation/sign_up.dart';
 import 'package:hiappy/screens/home/DoctorHome/DoctorHome.dart';
 import 'package:hiappy/screens/home/FamilyHome/FamilyHome.dart';

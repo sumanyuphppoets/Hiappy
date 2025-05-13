@@ -3,7 +3,7 @@ import 'package:hiappy/widgets/gradient_outline_button.dart';
 import 'package:hiappy/widgets/title_text.dart';
 
 class HelpandSupport extends StatelessWidget {
-  const HelpandSupport({Key? key}) : super(key: key);
+  const HelpandSupport({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:hiappy/features/auth/presentation/login.dart';
 import 'package:hiappy/features/auth/presentation/role_selection_screen.dart';
 import 'package:hiappy/screens/home/DoctorHome/DoctorMain.dart';
 import 'package:hiappy/screens/home/PatientHome/About/About.dart';
 import 'package:hiappy/screens/home/PatientHome/AccountSettings/AccountSettings.dart';
 import 'package:hiappy/screens/home/PatientHome/CreateSessionScreen/CreateSessionScreen.dart';
 import 'package:hiappy/screens/home/PatientHome/HelpandSupport/HelpandSupport.dart';
-import 'package:hiappy/screens/home/PatientHome/MainHome.dart';
 import 'package:hiappy/screens/home/PatientHome/MainSessionScreen.dart';
 import 'package:hiappy/screens/home/PatientHome/PrivacyPolicy/PrivacyPolicy.dart';
 import 'package:hiappy/screens/home/PatientHome/ProfileSessionScreen/ProfileSessionScreen.dart';
-import 'package:hiappy/screens/home/PatientHome/Subscriptions/Subscriptions.dart'
-    show Subscriptions;
+import 'package:hiappy/screens/home/PatientHome/Subscriptions/Subscriptions.dart' show Subscriptions;
 import 'package:hiappy/screens/home/PatientHome/TermsofService/TermsofService.dart';
 import 'package:hiappy/screens/home/PatientHome/ZoneSessionScreen/ZoneSessionScreen.dart';
 import 'package:hiappy/widgets/Bottomtabs/bottom_nav_screen.dart';

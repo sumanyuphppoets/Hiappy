@@ -169,23 +169,50 @@ class UpComming extends StatelessWidget {
                     // RIGHT SIDE: Platform Tag
                     if (displayPlatform.isNotEmpty)
                       Container(
-                        margin: const EdgeInsets.only(top: 12),
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          gradient: const LinearGradient(
-                            colors: [Color(0xFFEC6F66), Color(0xFF6E8EFB)],
+                          gradient: LinearGradient(
+                            colors: [Color(0xFFEB77CA), Color(0xFF968FFB)],
+                            // Your gradient colors
                           ),
+                          borderRadius: BorderRadius.circular(20),
                         ),
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 12,
-                          vertical: 6,
-                        ),
-                        child: Text(
-                          displayPlatform,
-                          style: const TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.white,
+                        padding: const EdgeInsets.all(1.5), // Border thickness
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white, // White background
+                            borderRadius: BorderRadius.circular(
+                              18,
+                            ), // Slightly less radius
+                          ),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 6,
+                          ),
+                          child: ShaderMask(
+                            shaderCallback:
+                                (bounds) => const LinearGradient(
+                                  colors: [
+                                    Color(0xFFEB77CA),
+                                    Color(0xFF968FFB),
+                                  ],
+                                ).createShader(
+                                  Rect.fromLTWH(
+                                    0,
+                                    0,
+                                    bounds.width,
+                                    bounds.height,
+                                  ),
+                                ),
+                            child: Text(
+                              displayPlatform,
+                              style: const TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w500,
+                                color:
+                                    Colors
+                                        .white, // Required but will be overridden by ShaderMask
+                              ),
+                            ),
                           ),
                         ),
                       ),

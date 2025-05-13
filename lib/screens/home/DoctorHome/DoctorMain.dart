@@ -104,7 +104,7 @@ class DoctorMain extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 40),
+            const SizedBox(height: 20),
             MeetingCard(
               topicTextStyle: TextStyle(color: AppColors.grey),
               titleText: 'Stress management tips!',
