@@ -8,12 +8,7 @@ class AppColors {
   static const Color slateBlue = Color(0xFF757CF0); // #757CF0
   static const Color lightBlue = Color(0xFF3ABAEB); // #757CF0
   static const Color darkeBlue = Color(0xFF4D66E2); // #757CF0
-  static const Color lightBlueTransparent = Color.fromARGB(
-    38,
-    137,
-    208,
-    235,
-  ); // #89D0EB
+  static const Color lightBlueTransparent =  Color(0xFFF0F5F9); // #F0F5F9
   // ⚫ Basic Neutrals
   static const Color black = Color(0xFF000000);
   static const Color darkGrey = Color(0xFF4A4A4A);

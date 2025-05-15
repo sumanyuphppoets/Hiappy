@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hiappy/features/auth/presentation/role_selection_screen.dart';
+import 'package:hiappy/screens/home/DoctorHome/DoctorAccountSettings/DoctorAccountSettings.dart';
+import 'package:hiappy/screens/home/DoctorHome/DoctorCreateSessionScreen/DoctorCreateSessionScreen.dart';
 import 'package:hiappy/screens/home/DoctorHome/DoctorMain.dart';
+import 'package:hiappy/screens/home/DoctorHome/DoctorSession/DoctorSession.dart';
+import 'package:hiappy/screens/home/DoctorHome/PatientDetails/PatientDetails.dart';
 import 'package:hiappy/screens/home/PatientHome/About/About.dart';
-import 'package:hiappy/screens/home/PatientHome/AccountSettings/AccountSettings.dart';
 import 'package:hiappy/screens/home/PatientHome/CreateSessionScreen/CreateSessionScreen.dart';
 import 'package:hiappy/screens/home/PatientHome/HelpandSupport/HelpandSupport.dart';
 import 'package:hiappy/screens/home/PatientHome/MainSessionScreen.dart';
@@ -22,10 +25,10 @@ class DoctorHome extends StatefulWidget {
 
   @override
   // ignore: library_private_types_in_public_api
-  _PatientHomeState createState() => _PatientHomeState();
+  DoctorHomeState createState() => DoctorHomeState();
 }
 
-class _PatientHomeState extends State<DoctorHome> {
+class DoctorHomeState extends State<DoctorHome> {
   int _selectedIndex = 0;
 
   // List of BottomTabItems
@@ -40,13 +43,13 @@ class _PatientHomeState extends State<DoctorHome> {
       title: 'Sessions',
       inactiveSvgPath: 'assets/icons/SessionsDeactivetab.svg',
       activeSvgPath: 'assets/icons/SessionsActivetab.svg',
-      screen: MainSessionScreen(),
+      screen: DoctorSessionScreen(),
     ),
     BottomTabItem(
       title: 'Create',
       inactiveSvgPath: 'assets/icons/Sessiontab.svg',
       activeSvgPath: 'assets/icons/Sessiontab.svg',
-      screen: CreateSessionScreen(),
+      screen: DoctorCreateSessionScreen(),
     ),
     BottomTabItem(
       title: 'Zone',
@@ -72,7 +75,6 @@ class _PatientHomeState extends State<DoctorHome> {
   @override
   Widget build(BuildContext context) {
     final currentScreen = items[_selectedIndex].screen;
-
     return Scaffold(
       appBar: PatientCustomAppBar(
         centerImage: 'assets/images/StaySoberLogo.png',
@@ -86,7 +88,7 @@ class _PatientHomeState extends State<DoctorHome> {
                   currentScreen is CreateSessionScreen ||
                   currentScreen is ZoneSessionScreen ||
                   currentScreen is ProfileSessionScreen ||
-                  currentScreen is MainSessionScreen
+                  currentScreen is PatientDetails
               ? SizedBox(
                 width: double.infinity,
                 child: Drawer(
@@ -134,23 +136,12 @@ class _PatientHomeState extends State<DoctorHome> {
                               ),
                               children: [
                                 DrawerTile(
-                                  svgPath: 'assets/icons/Subscription.svg',
-                                  title: 'Manage Subscription',
-                                  onTap: () {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) => Subscriptions(),
-                                      ),
-                                    );
-                                  },
-                                ),
-                                DrawerTile(
                                   svgPath: 'assets/icons/Account.svg',
                                   title: 'Account Settings',
                                   onTap: () {
                                     Navigator.of(context).push(
                                       MaterialPageRoute(
-                                        builder: (context) => AccountSettings(),
+                                        builder: (context) => DoctorAccountSettings(),
                                       ),
                                     );
                                   },
@@ -258,3 +249,4 @@ class _PatientHomeState extends State<DoctorHome> {
     );
   }
 }
+

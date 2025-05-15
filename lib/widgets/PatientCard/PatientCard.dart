@@ -7,7 +7,7 @@ class Patient {
   final String center;
   final String imageUrl;
   final Color? backgroundColor;
-
+  
   Patient({
     required this.name,
     required this.age,
@@ -15,6 +15,7 @@ class Patient {
     required this.center,
     required this.imageUrl,
     this.backgroundColor,
+    
   });
 }
 
@@ -23,13 +24,14 @@ class PatientCard extends StatefulWidget {
   final bool user; // 👈 New
   final String name; // 👈 New
   final VoidCallback? onSeeMore; // 👈 New: callback for "See More"
-
+  final Function(Patient patient)? onCardTap;
   const PatientCard({
     super.key,
     required this.patients,
     required this.user,
     required this.name,
-    this.onSeeMore, // 👈 Initialize the callback
+    this.onSeeMore,
+    this.onCardTap,
   });
 
   @override
@@ -144,10 +146,12 @@ class _PatientCardState extends State<PatientCard> {
     );
   }
 
-  Widget _buildPatientCard(Patient patient) {
-    final bool isNetworkImage = patient.imageUrl.startsWith('http');
-    return Padding(
-      padding: const EdgeInsets.only(left: 16, right: 8, bottom: 5),
+ Widget _buildPatientCard(Patient patient) {
+  final bool isNetworkImage = patient.imageUrl.startsWith('http');
+  return Padding(
+    padding: const EdgeInsets.only(left: 16, right: 8, bottom: 5),
+    child: GestureDetector(
+      onTap: widget.onCardTap != null ? () => widget.onCardTap!(patient) : null,
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
@@ -163,38 +167,34 @@ class _PatientCardState extends State<PatientCard> {
         ),
         child: Column(
           children: [
-            // Image
             ClipRRect(
               borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(20),
                 topRight: Radius.circular(20),
               ),
-              child:
-                  isNetworkImage
-                      ? Image.network(
-                        patient.imageUrl,
-                        height: 120,
-                        width: double.infinity,
-                        fit: BoxFit.cover,
-                        errorBuilder: (context, error, stackTrace) {
-                          return Image.asset(
-                            'assets/images/Patientsimg.png',
-                            height: 200,
-                            width: double.infinity,
-                            fit: BoxFit.cover,
-                          );
-                        },
-                      )
-                      : Image.asset(
-                        patient.imageUrl,
-                        height: 200,
-                        width: double.infinity,
-                        fit: BoxFit.cover,
-                      ),
+              child: isNetworkImage
+                  ? Image.network(
+                      patient.imageUrl,
+                      height: 120,
+                      width: double.infinity,
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Image.asset(
+                          'assets/images/Patientsimg.png',
+                          height: 200,
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                        );
+                      },
+                    )
+                  : Image.asset(
+                      patient.imageUrl,
+                      height: 200,
+                      width: double.infinity,
+                      fit: BoxFit.cover,
+                    ),
             ),
-
             const SizedBox(height: 8),
-
             Text(
               patient.name,
               style: const TextStyle(
@@ -214,7 +214,6 @@ class _PatientCardState extends State<PatientCard> {
               style: const TextStyle(fontSize: 13),
             ),
             const SizedBox(height: 12),
-
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.blue,
@@ -240,6 +239,7 @@ class _PatientCardState extends State<PatientCard> {
           ],
         ),
       ),
-    );
-  }
+    ),
+  );
+}
 }

@@ -25,47 +25,50 @@ class GradientButton extends StatelessWidget {
     this.iconSize = 18,
   });
 
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: width,
-      height: height,
+ @override
+Widget build(BuildContext context) {
+  return Material(
+    color: Colors.transparent,
+    borderRadius: BorderRadius.circular(borderRadius),
+    child: Ink(
       decoration: BoxDecoration(
         gradient: gradient,
         borderRadius: BorderRadius.circular(borderRadius),
       ),
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          onTap: onPressed,
-          borderRadius: BorderRadius.circular(borderRadius),
-          child: Center(
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  title,
-                  style: TextStyle(
-                    fontSize: textSize,
-                    color: Colors.white,
-                    fontWeight: FontWeight.w600,
-                  ),
+      child: InkWell(
+        onTap: onPressed,
+        borderRadius: BorderRadius.circular(borderRadius),
+        child: Container(
+          width: width,
+          height: height,
+          alignment: Alignment.center,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                title,
+                style: TextStyle(
+                  fontSize: textSize,
+                  color: Colors.white,
+                  fontWeight: FontWeight.w600,
                 ),
-                if (svgIconPath != null) ...[
-                  const SizedBox(width: 8),
-                  SvgPicture.asset(
-                    svgIconPath!,
-                    height: iconSize,
-                    width: iconSize,
-                    colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
-                  ),
-                ]
-              ],
-            ),
+              ),
+              if (svgIconPath != null) ...[
+                const SizedBox(width: 8),
+                SvgPicture.asset(
+                  svgIconPath!,
+                  height: iconSize,
+                  width: iconSize,
+                  colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+                ),
+              ]
+            ],
           ),
         ),
       ),
-    );
-  }
+    ),
+  );
+}
+
 }

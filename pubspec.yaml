@@ -51,6 +51,7 @@ dependencies:
   geolocator: ^14.0.0
   permission_handler: ^12.0.0+1
   accordion: ^2.6.0
+  url_launcher: ^6.3.1
 
 flutter_launcher_icons:
   android: true              # ✅ Set to true, not "launcher_icon"
@@ -162,6 +163,7 @@ flutter:
   - assets/icons/Logout.svg
   - assets/images/Renewal.png
   - assets/images/Patientsimg.png
+  - assets/images/pdf_icon.png
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

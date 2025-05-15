@@ -36,15 +36,13 @@ class GradientOutlineButton extends StatelessWidget {
         gradient: LinearGradient(colors: gradientColors),
         borderRadius: BorderRadius.circular(borderRadius),
       ),
-      padding: const EdgeInsets.all(1), // 1px border
-      child: InkWell(
-        onTap: onTap,
+      padding: const EdgeInsets.all(1), // 1px gradient border
+      child: Material(
+        color: Colors.white,
         borderRadius: BorderRadius.circular(borderRadius),
-        child: Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(borderRadius),
-          ),
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(borderRadius),
           child: Padding(
             padding: padding,
             child: Row(
@@ -52,17 +50,14 @@ class GradientOutlineButton extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                if (svgAssetPath != null)
-                
-                  Padding(
-                    padding: const EdgeInsets.only(right: 0),
-                    child: SvgPicture.asset(
-                      svgAssetPath!,
-                      width: iconSize,
-                      height: iconSize,
-                    ),
+                if (svgAssetPath != null) ...[
+                  SvgPicture.asset(
+                    svgAssetPath!,
+                    width: iconSize,
+                    height: iconSize,
                   ),
                   const SizedBox(width: 10),
+                ],
                 Flexible(
                   child: Text(
                     title,

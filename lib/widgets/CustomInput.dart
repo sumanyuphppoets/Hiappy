@@ -4,7 +4,7 @@ import 'custom_dropdown.dart'; // Your dropdown widget
 
 class CustomInput extends StatefulWidget {
   final String? label;
-  final String hint;
+  final String? hint;
   final String? iconAsset;
   final double iconSize;
   final bool obscureText;
@@ -23,7 +23,7 @@ class CustomInput extends StatefulWidget {
   const CustomInput({
     Key? key,
     this.label,
-    required this.hint,
+    this.hint,
     this.iconAsset,
     this.iconSize = 20.0,
     this.obscureText = false,
@@ -71,7 +71,7 @@ class _CustomInputState extends State<CustomInput> {
                 initialValue: widget.initialDropdownValue,
                 onChanged: widget.onChanged,
                 validator: widget.validator,
-                hint: widget.hint,
+                hint: widget.hint ?? '',
               )
             : TextFormField(
                 controller: widget.controller,
@@ -82,7 +82,7 @@ class _CustomInputState extends State<CustomInput> {
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 decoration: widget.decoration ??
                     _defaultDecoration(
-                      hint: widget.hint,
+                      hint: widget.hint ?? '',
                       suffix: widget.obscureText
                           ? IconButton(
                               icon: Icon(

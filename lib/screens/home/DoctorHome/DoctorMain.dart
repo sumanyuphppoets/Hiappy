@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hiappy/core/constants/colors.dart';
+import 'package:hiappy/screens/home/DoctorHome/PatientDetails/PatientDetails.dart';
 import 'package:hiappy/screens/home/PatientHome/AllSession/AllSession.dart';
 import 'package:hiappy/screens/home/PatientHome/MettingRequest/MettingRequest.dart';
 import 'package:hiappy/widgets/PatientCard/PatientCard.dart';
@@ -27,6 +28,14 @@ class DoctorMain extends StatelessWidget {
             PatientCard(
               name: "New Patients",
               user: true,
+              onCardTap: (Patient patient) {
+                Navigator.of(context, rootNavigator: true).push(
+                  MaterialPageRoute(
+                    builder: (context) => PatientDetails(patient: patient),
+                  ),
+                );
+              },
+
               patients: [
                 Patient(
                   name: "Nitin Kumar",
@@ -87,6 +96,15 @@ class DoctorMain extends StatelessWidget {
               onSeeMore: () {
                 // Handle see more action
               },
+              onCardTap: (Patient patient) {
+                // Handle card tap
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => PatientDetails(patient: patient),
+                  ),
+                );
+              },
+
               patients: [
                 Patient(
                   name: "Rahul Sharma",
