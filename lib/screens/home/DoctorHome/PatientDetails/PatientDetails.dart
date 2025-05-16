@@ -77,13 +77,12 @@ class PatientDetails extends StatelessWidget {
   ];
 
   final Meeting meeting = Meeting(
-  topic: "Topic",
-  mentor: "Abhijeet Patel",
-  dateTime: DateTime(2024, 7, 20, 12, 45),
-  duration: "30-45 min",
-  platform: "Via Zoom",
-);
-
+    topic: "Topic",
+    mentor: "Abhijeet Patel",
+    dateTime: DateTime(2024, 7, 20, 12, 45),
+    duration: "30-45 min",
+    platform: "Via Zoom",
+  );
 
   String lastDay = "";
 
@@ -113,12 +112,9 @@ class PatientDetails extends StatelessWidget {
                 Positioned(
                   top: MediaQuery.of(context).padding.top + 8,
                   left: 12,
-                  child: CircleAvatar(
-                    backgroundColor: Colors.white70,
-                    child: IconButton(
-                      icon: const Icon(Icons.arrow_back, color: Colors.black),
-                      onPressed: () => Navigator.of(context).pop(),
-                    ),
+                  child: IconButton(
+                    icon: const Icon(Icons.arrow_back, color: Colors.black),
+                    onPressed: () => Navigator.of(context).pop(),
                   ),
                 ),
               ],
@@ -533,7 +529,7 @@ class PatientDetails extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
                   Padding(
-                    padding: const EdgeInsets.all(5),
+                    padding: const EdgeInsets.all(0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -591,7 +587,6 @@ class PatientDetails extends StatelessWidget {
                     duration: '30-45 min',
                     platform: 'Via Zoom',
                     Join: 'Invite now',
-                    
                   ),
                   SizedBox(height: 40),
                 ],
