@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:hiappy/core/constants/colors.dart';
+import 'package:hiappy/screens/home/DoctorHome/MettingRequest/MettingRequest.dart';
+import 'package:hiappy/screens/home/PatientHome/AllSession/AllSession.dart';
 import 'package:hiappy/widgets/CustomInput.dart';
+import 'package:hiappy/widgets/DoctorNotificationCard/NotificationCard.dart';
 import 'package:hiappy/widgets/PatientCard/PatientCard.dart';
+import 'package:hiappy/widgets/UpCommingMeeting/UpComming.dart';
+import 'package:hiappy/widgets/UpcomingMeetings/UpcomingMeetings.dart';
 import 'package:hiappy/widgets/gradient_button.dart';
 import 'package:hiappy/widgets/gradient_outline_button.dart';
 import 'package:hiappy/widgets/title_text.dart';
@@ -37,6 +42,50 @@ class PatientDetails extends StatelessWidget {
       );
     }
   }
+
+  List<Map<String, String>> notifications = [
+    {
+      "day": "Today",
+      "message": "You have a new message",
+      "reply": "Okay",
+      "time": "10:00 AM",
+    },
+    {
+      "day": "Today",
+      "message": "Order confirmed",
+      "reply": "Thanks",
+      "time": "9:00 AM",
+    },
+    {
+      "day": "Yesterday",
+      "message": "Package shipped",
+      "reply": "Got it",
+      "time": "8:00 PM",
+    },
+    {
+      "day": "Yesterday",
+      "message": "Appointment rescheduled",
+      "reply": "Noted",
+      "time": "4:30 PM",
+    },
+    {
+      "day": "2 days ago",
+      "message": "New lab results available",
+      "reply": "Reviewing",
+      "time": "11:15 AM",
+    },
+  ];
+
+  final Meeting meeting = Meeting(
+  topic: "Topic",
+  mentor: "Abhijeet Patel",
+  dateTime: DateTime(2024, 7, 20, 12, 45),
+  duration: "30-45 min",
+  platform: "Via Zoom",
+);
+
+
+  String lastDay = "";
 
   @override
   Widget build(BuildContext context) {
@@ -162,7 +211,7 @@ class PatientDetails extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Container(
                 width: double.infinity,
-                transform: Matrix4.translationValues(0.0, -40, 0.0),
+                transform: Matrix4.translationValues(0.0, -70, 0.0),
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
                   gradient: const LinearGradient(
@@ -201,9 +250,6 @@ class PatientDetails extends StatelessWidget {
                 ),
               ),
             ),
-
-            const SizedBox(height: 20),
-
             // Medical History Title
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -297,7 +343,42 @@ class PatientDetails extends StatelessWidget {
             ),
 
             const SizedBox(height: 20),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      TitleText(
+                        text: "Notifications",
+                        color: AppColors.black,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w700,
+                        textAlign: TextAlign.left,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          // Add your navigation or action here
+                          print("Notification clicked!");
+                        },
+                        child: TitleText(
+                          text: "1 new notification",
+                          color: AppColors.royalBlue,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          textAlign: TextAlign.right,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 10), // optional spacing below
+                ],
+              ),
+            ),
 
+            const SizedBox(height: 20),
             // Notification Card
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -329,7 +410,7 @@ class PatientDetails extends StatelessWidget {
                           child: const Icon(
                             Icons.local_bar,
                             color: Colors.white,
-                            size: 24,
+                            size: 40,
                           ),
                         ),
                         const SizedBox(width: 12),
@@ -374,7 +455,7 @@ class PatientDetails extends StatelessWidget {
                     ),
                     const SizedBox(height: 12),
                     Padding(
-                      padding: EdgeInsetsGeometry.fromLTRB(50, 0, 0, 0),
+                      padding: EdgeInsetsGeometry.fromLTRB(70, 0, 0, 0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -388,6 +469,7 @@ class PatientDetails extends StatelessWidget {
 
                           CustomInput(
                             controller: fullNameController,
+                            maxLines: 3,
                             validator: (value) {
                               if (value == null || value.trim().isEmpty) {
                                 return '';
@@ -400,8 +482,7 @@ class PatientDetails extends StatelessWidget {
                     ),
                     const SizedBox(height: 10),
                     Center(
-                      child:
-                      GradientOutlineButton(
+                      child: GradientOutlineButton(
                         title: 'Send',
                         gradientColors: const [
                           AppColors.royalBlue,
@@ -419,8 +500,103 @@ class PatientDetails extends StatelessWidget {
                 ),
               ),
             ),
-
             const SizedBox(height: 40),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      TitleText(
+                        text: "Notifications History",
+                        color: AppColors.black,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w700,
+                        textAlign: TextAlign.left,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          // Add your navigation or action here
+                          print("Notification See more clicked!");
+                        },
+                        child: TitleText(
+                          text: "See more",
+                          color: AppColors.royalBlue,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          textAlign: TextAlign.right,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  Padding(
+                    padding: const EdgeInsets.all(5),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children:
+                              notifications.map((item) {
+                                bool showDay = item["day"] != lastDay;
+                                lastDay = item["day"]!;
+                                return NotificationCard(
+                                  message: item["message"]!,
+                                  reply: item["reply"]!,
+                                  time: item["time"]!,
+                                  day: item["day"]!,
+                                  showDay: showDay,
+                                );
+                              }).toList(),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  MeetingCard(
+                    topicTextStyle: TextStyle(color: AppColors.grey),
+                    titleText: 'Stress management tips!',
+                    titleTextStyle: TextStyle(
+                      color: AppColors.royalBlue,
+                      fontSize: 18,
+                      fontFamily: 'Poppins',
+                      fontWeight: FontWeight.w500,
+                    ),
+                    headingText: 'Scheduled Meetings',
+                    rescheduleText: 'Re-schedule',
+                    cancelText: 'Cancel',
+                    cancelGradientColors: [
+                      AppColors.darkeBlue,
+                      AppColors.lightBlue,
+                    ],
+                    meeting: meeting,
+                    onCancel: () {
+                      print("Meeting cancelled");
+                    },
+                    onReschedule: () {
+                      print("Meeting rescheduled");
+                    },
+                  ),
+                  const SizedBox(height: 40),
+                  UpComming(
+                    headingText: 'Upcoming Session',
+                    imagePath: 'assets/images/Sessionimg.png',
+                    topic: 'Topic',
+                    subtitle: 'Anger management & benefits.',
+                    speaker: 'Dr. Dinesh Acharjya ',
+                    message: 'Physical medicine & Rehabilitation',
+                    duration: '30-45 min',
+                    platform: 'Via Zoom',
+                    Join: 'Invite now',
+                    
+                  ),
+                  SizedBox(height: 40),
+                ],
+              ),
+            ),
           ],
         ),
       ),

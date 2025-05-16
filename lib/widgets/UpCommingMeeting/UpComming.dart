@@ -16,6 +16,8 @@ class UpComming extends StatelessWidget {
   final VoidCallback? onSeeMore;
   final String? platform;
   final String? Join;
+  final VoidCallback? onPrimaryButtonPressed;
+  final VoidCallback? onJoinButtonPressed;
 
   const UpComming({
     super.key,
@@ -31,6 +33,8 @@ class UpComming extends StatelessWidget {
     this.onSeeMore,
     this.platform,
     this.Join,
+    this.onPrimaryButtonPressed,
+    this.onJoinButtonPressed,
   });
 
   @override
@@ -42,7 +46,7 @@ class UpComming extends StatelessWidget {
     final displayMessage = message ?? '';
     final displayDuration = duration ?? '';
     final displayButtonText = buttonText ?? '';
-    final JoinButtonText = Join ?? 'Join now';
+    final joinButtonText = Join ?? '';
     final displayPlatform = platform ?? '';
 
     return Column(
@@ -111,7 +115,6 @@ class UpComming extends StatelessWidget {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // LEFT SIDE: Text Content
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -166,23 +169,19 @@ class UpComming extends StatelessWidget {
                         ],
                       ),
                     ),
-                    // RIGHT SIDE: Platform Tag
                     if (displayPlatform.isNotEmpty)
                       Container(
                         decoration: BoxDecoration(
-                          gradient: LinearGradient(
+                          gradient: const LinearGradient(
                             colors: [Color(0xFFEB77CA), Color(0xFF968FFB)],
-                            // Your gradient colors
                           ),
                           borderRadius: BorderRadius.circular(20),
                         ),
-                        padding: const EdgeInsets.all(1.5), // Border thickness
+                        padding: const EdgeInsets.all(1.5),
                         child: Container(
                           decoration: BoxDecoration(
-                            color: Colors.white, // White background
-                            borderRadius: BorderRadius.circular(
-                              18,
-                            ), // Slightly less radius
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(18),
                           ),
                           padding: const EdgeInsets.symmetric(
                             horizontal: 12,
@@ -208,9 +207,7 @@ class UpComming extends StatelessWidget {
                               style: const TextStyle(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w500,
-                                color:
-                                    Colors
-                                        .white, // Required but will be overridden by ShaderMask
+                                color: Colors.white,
                               ),
                             ),
                           ),
@@ -250,35 +247,43 @@ class UpComming extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
-                      child: GradientButton(
-                        title: displayButtonText,
-                        textSize: 12,
-                        gradient: const LinearGradient(
-                          colors: [Color(0xFF75B5EB), Color(0xFF75EC99)],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ),
-                        borderRadius: 30,
-                        height: 50,
-                        width: 150,
-                        onPressed: () {},
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 12,
                       ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.all(1.5),
-                      child: GradientButton(
-                        title: JoinButtonText,
-                        textSize: 12,
-                        gradient: const LinearGradient(
-                          colors: [Color(0xFF3ABAEB), Color(0xFF4D66E2)],
-                          begin: Alignment.bottomRight,
-                          end: Alignment.topLeft,
-                        ),
-                        borderRadius: 30,
-                        height: 50,
-                        width: 150,
-                        onPressed: () {},
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          if (displayButtonText.isNotEmpty)
+                            GradientButton(
+                              title: displayButtonText,
+                              textSize: 12,
+                              gradient: const LinearGradient(
+                                colors: [Color(0xFF75B5EB), Color(0xFF75EC99)],
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                              ),
+                              borderRadius: 30,
+                              height: 50,
+                              width: 150,
+                              onPressed: onPrimaryButtonPressed ?? () {},
+                            ),
+                          if (joinButtonText.isNotEmpty)
+                            GradientButton(
+                              title: joinButtonText,
+                              textSize: 12,
+                              gradient: const LinearGradient(
+                                colors: [Color(0xFF3ABAEB), Color(0xFF4D66E2)],
+                                begin: Alignment.bottomRight,
+                                end: Alignment.topLeft,
+                              ),
+                              borderRadius: 30,
+                              height: 50,
+                              width: 150,
+                              onPressed: onJoinButtonPressed ?? () {},
+                            ),
+                        ],
                       ),
                     ),
                   ],
